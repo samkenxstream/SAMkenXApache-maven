@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DefaultArtifactTest
+class DefaultArtifactTest
 {
 
     private DefaultArtifact artifact;
@@ -47,8 +47,7 @@ public class DefaultArtifactTest
     private ArtifactHandlerMock artifactHandler;
 
     @BeforeEach
-    public void setUp()
-        throws Exception
+    void setUp()
     {
         artifactHandler = new ArtifactHandlerMock();
         versionRange = VersionRange.createFromVersion( version );
@@ -59,7 +58,7 @@ public class DefaultArtifactTest
     }
 
     @Test
-    public void testGetVersionReturnsResolvedVersionOnSnapshot()
+    void testGetVersionReturnsResolvedVersionOnSnapshot()
     {
         assertEquals( snapshotResolvedVersion, snapshotArtifact.getVersion() );
 
@@ -70,62 +69,62 @@ public class DefaultArtifactTest
     }
 
     @Test
-    public void testGetDependencyConflictId()
+    void testGetDependencyConflictId()
     {
         assertEquals( groupId + ":" + artifactId + ":" + type + ":" + classifier, artifact.getDependencyConflictId() );
     }
 
     @Test
-    public void testGetDependencyConflictIdNullGroupId()
+    void testGetDependencyConflictIdNullGroupId()
     {
         artifact.setGroupId( null );
         assertEquals( null + ":" + artifactId + ":" + type + ":" + classifier, artifact.getDependencyConflictId() );
     }
 
     @Test
-    public void testGetDependencyConflictIdNullClassifier()
+    void testGetDependencyConflictIdNullClassifier()
     {
         artifact = new DefaultArtifact( groupId, artifactId, versionRange, scope, type, null, artifactHandler );
         assertEquals( groupId + ":" + artifactId + ":" + type, artifact.getDependencyConflictId() );
     }
 
     @Test
-    public void testGetDependencyConflictIdNullScope()
+    void testGetDependencyConflictIdNullScope()
     {
         artifact.setScope( null );
         assertEquals( groupId + ":" + artifactId + ":" + type + ":" + classifier, artifact.getDependencyConflictId() );
     }
 
     @Test
-    public void testToString()
+    void testToString()
     {
         assertEquals( groupId + ":" + artifactId + ":" + type + ":" + classifier + ":" + version + ":" + scope,
                       artifact.toString() );
     }
 
     @Test
-    public void testToStringNullGroupId()
+    void testToStringNullGroupId()
     {
         artifact.setGroupId( null );
         assertEquals( artifactId + ":" + type + ":" + classifier + ":" + version + ":" + scope, artifact.toString() );
     }
 
     @Test
-    public void testToStringNullClassifier()
+    void testToStringNullClassifier()
     {
         artifact = new DefaultArtifact( groupId, artifactId, versionRange, scope, type, null, artifactHandler );
         assertEquals( groupId + ":" + artifactId + ":" + type + ":" + version + ":" + scope, artifact.toString() );
     }
 
     @Test
-    public void testToStringNullScope()
+    void testToStringNullScope()
     {
         artifact.setScope( null );
         assertEquals( groupId + ":" + artifactId + ":" + type + ":" + classifier + ":" + version, artifact.toString() );
     }
 
     @Test
-    public void testComparisonByVersion()
+    void testComparisonByVersion()
     {
         Artifact artifact1 = new DefaultArtifact( groupId, artifactId, VersionRange.createFromVersion( "5.0" ), scope,
                                                   type, classifier, artifactHandler );
@@ -142,7 +141,7 @@ public class DefaultArtifactTest
     }
 
     @Test
-    public void testNonResolvedVersionRangeConsistentlyYieldsNullVersions()
+    void testNonResolvedVersionRangeConsistentlyYieldsNullVersions()
         throws Exception
     {
         VersionRange vr = VersionRange.createFromVersionSpec( "[1.0,2.0)" );

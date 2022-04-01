@@ -41,11 +41,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public class ModelUtilsTest
+class ModelUtilsTest
 {
 
-    @Test
-    public void testShouldUseMainPluginDependencyVersionOverManagedDepVersion()
+
+    void testShouldUseMainPluginDependencyVersionOverManagedDepVersion()
     {
         Plugin mgtPlugin = createPlugin( "group", "artifact", "1", Collections.EMPTY_MAP );
         Dependency mgtDep = createDependency( "g", "a", "2" );
@@ -72,8 +72,8 @@ public class ModelUtilsTest
         return dep;
     }
 
-    @Test
-    public void testShouldNotInheritPluginWithInheritanceSetToFalse()
+
+    void testShouldNotInheritPluginWithInheritanceSetToFalse()
     {
         PluginContainer parent = new PluginContainer();
 
@@ -114,7 +114,7 @@ public class ModelUtilsTest
      * </pre>
      */
     @Test
-    public void testShouldPreserveChildOrderingOfPluginsAfterParentMerge()
+    void testShouldPreserveChildOrderingOfPluginsAfterParentMerge()
     {
         PluginContainer parent = new PluginContainer();
 
@@ -183,7 +183,7 @@ public class ModelUtilsTest
     }
 
     @Test
-    public void testShouldInheritOnePluginWithExecution()
+    void testShouldInheritOnePluginWithExecution()
     {
         Plugin parent = new Plugin();
         parent.setArtifactId( "testArtifact" );
@@ -234,7 +234,7 @@ public class ModelUtilsTest
     }
 
     @Test
-    public void testShouldMergeOnePluginWithInheritExecutionWithoutDuplicatingPluginInList()
+    void testShouldMergeOnePluginWithInheritExecutionWithoutDuplicatingPluginInList()
     {
         Plugin parent = new Plugin();
         parent.setArtifactId( "testArtifact" );
@@ -269,7 +269,7 @@ public class ModelUtilsTest
     }
 
     @Test
-    public void testShouldMergePluginWithDifferentExecutionFromParentWithoutDuplicatingPluginInList()
+    void testShouldMergePluginWithDifferentExecutionFromParentWithoutDuplicatingPluginInList()
     {
         Plugin parent = new Plugin();
         parent.setArtifactId( "testArtifact" );
@@ -310,7 +310,7 @@ public class ModelUtilsTest
     }
 
     @Test
-    public void testShouldNOTMergeInheritedPluginHavingInheritEqualFalse()
+    void testShouldNOTMergeInheritedPluginHavingInheritEqualFalse()
     {
         Plugin parent = new Plugin();
         parent.setArtifactId( "testArtifact" );
@@ -338,7 +338,7 @@ public class ModelUtilsTest
      * child list.
      */
     @Test
-    public void testShouldKeepOriginalPluginOrdering()
+    void testShouldKeepOriginalPluginOrdering()
     {
         Plugin parentPlugin1 = new Plugin();
         parentPlugin1.setArtifactId( "testArtifact" );
@@ -403,7 +403,7 @@ public class ModelUtilsTest
      * Verifies MNG-1499: The ordering of plugin executions should also be in the specified order.
      */
     @Test
-    public void testShouldKeepOriginalPluginExecutionOrdering()
+    void testShouldKeepOriginalPluginExecutionOrdering()
     {
         Plugin parent = new Plugin();
         parent.setArtifactId( "testArtifact" );
@@ -453,7 +453,7 @@ public class ModelUtilsTest
     }
 
     @Test
-    public void testShouldOverwritePluginConfigurationSubItemsByDefault()
+    void testShouldOverwritePluginConfigurationSubItemsByDefault()
         throws XmlPullParserException, IOException
     {
         String parentConfigStr = "<configuration><items><item>one</item><item>two</item></items></configuration>";
@@ -480,7 +480,7 @@ public class ModelUtilsTest
     }
 
     @Test
-    public void testShouldMergePluginConfigurationSubItemsWithMergeAttributeSet()
+    void testShouldMergePluginConfigurationSubItemsWithMergeAttributeSet()
         throws XmlPullParserException, IOException
     {
         String parentConfigStr = "<configuration><items><item>one</item><item>two</item></items></configuration>";
@@ -512,7 +512,7 @@ public class ModelUtilsTest
     }
 
     @Test
-    public void testShouldNotMergePluginExecutionWhenExecInheritedIsFalseAndTreatAsInheritanceIsTrue()
+    void testShouldNotMergePluginExecutionWhenExecInheritedIsFalseAndTreatAsInheritanceIsTrue()
     {
         String gid = "group";
         String aid = "artifact";
@@ -553,7 +553,7 @@ public class ModelUtilsTest
     }
 
     @Test
-    public void testShouldNotMergePluginExecutionWhenPluginInheritedIsFalseAndTreatAsInheritanceIsTrue()
+    void testShouldNotMergePluginExecutionWhenPluginInheritedIsFalseAndTreatAsInheritanceIsTrue()
     {
         String gid = "group";
         String aid = "artifact";
@@ -594,7 +594,7 @@ public class ModelUtilsTest
     }
 
     @Test
-    public void testShouldMergePluginExecutionWhenExecInheritedIsTrueAndTreatAsInheritanceIsTrue()
+    void testShouldMergePluginExecutionWhenExecInheritedIsTrueAndTreatAsInheritanceIsTrue()
     {
         String gid = "group";
         String aid = "artifact";

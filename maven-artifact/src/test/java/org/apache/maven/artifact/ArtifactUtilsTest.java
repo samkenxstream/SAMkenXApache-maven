@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Benjamin Bentmann
  */
-public class ArtifactUtilsTest
+class ArtifactUtilsTest
 {
 
     private Artifact newArtifact( String aid )
@@ -45,7 +45,7 @@ public class ArtifactUtilsTest
     }
 
     @Test
-    public void testIsSnapshot()
+    void testIsSnapshot()
     {
         assertFalse( ArtifactUtils.isSnapshot( null ) );
         assertFalse( ArtifactUtils.isSnapshot( "" ) );
@@ -57,7 +57,7 @@ public class ArtifactUtilsTest
     }
 
     @Test
-    public void testToSnapshotVersion()
+    void testToSnapshotVersion()
     {
         assertEquals( "1.2.3", ArtifactUtils.toSnapshotVersion( "1.2.3" ) );
         assertEquals( "1.2.3-SNAPSHOT", ArtifactUtils.toSnapshotVersion( "1.2.3-SNAPSHOT" ) );
@@ -69,8 +69,7 @@ public class ArtifactUtilsTest
      * Tests that the ordering of the map resembles the ordering of the input collection of artifacts.
      */
     @Test
-    public void testArtifactMapByVersionlessIdOrdering()
-        throws Exception
+    void testArtifactMapByVersionlessIdOrdering()
     {
         List<Artifact> list = new ArrayList<>();
         list.add( newArtifact( "b" ) );

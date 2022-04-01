@@ -39,7 +39,7 @@ import javax.inject.Inject;
 /**
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  */
-public class ArtifactDeployerTest
+class ArtifactDeployerTest
     extends AbstractArtifactComponentTestCase
 {
     @Inject
@@ -54,7 +54,7 @@ public class ArtifactDeployerTest
     }
 
     @Test
-    public void testArtifactInstallation()
+    void testArtifactInstallation()
         throws Exception
     {
         sessionScope.enter();

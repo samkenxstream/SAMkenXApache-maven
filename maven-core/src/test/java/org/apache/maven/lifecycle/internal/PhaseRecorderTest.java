@@ -29,10 +29,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * @author Kristian Rosenvold
  */
-public class PhaseRecorderTest
+class PhaseRecorderTest
 {
     @Test
-    public void testObserveExecution() throws Exception {
+    void testObserveExecution() throws Exception {
         PhaseRecorder phaseRecorder = new PhaseRecorder( ProjectDependencyGraphStub.A);
         MavenExecutionPlan plan = LifecycleExecutionPlanCalculatorStub.getProjectAExceutionPlan();
         final List<MojoExecution> executions = plan.getMojoExecutions();

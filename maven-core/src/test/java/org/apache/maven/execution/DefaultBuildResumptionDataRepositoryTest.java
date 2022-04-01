@@ -33,12 +33,12 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 
-public class DefaultBuildResumptionDataRepositoryTest
+class DefaultBuildResumptionDataRepositoryTest
 {
     private final DefaultBuildResumptionDataRepository repository = new DefaultBuildResumptionDataRepository();
 
     @Test
-    public void resumeFromPropertyGetsApplied()
+    void resumeFromPropertyGetsApplied()
     {
         MavenExecutionRequest request = new DefaultMavenExecutionRequest();
         Properties properties = new Properties();
@@ -50,7 +50,7 @@ public class DefaultBuildResumptionDataRepositoryTest
     }
 
     @Test
-    public void resumeFromPropertyDoesNotOverrideExistingRequestParameters()
+    void resumeFromPropertyDoesNotOverrideExistingRequestParameters()
     {
         MavenExecutionRequest request = new DefaultMavenExecutionRequest();
         request.setResumeFrom( ":module-b" );
@@ -63,7 +63,7 @@ public class DefaultBuildResumptionDataRepositoryTest
     }
 
     @Test
-    public void projectsFromPropertyGetsAddedToExistingRequestParameters()
+    void projectsFromPropertyGetsAddedToExistingRequestParameters()
     {
         MavenExecutionRequest request = new DefaultMavenExecutionRequest();
         List<String> selectedProjects = new ArrayList<>();
@@ -78,7 +78,7 @@ public class DefaultBuildResumptionDataRepositoryTest
     }
 
     @Test
-    public void selectedProjectsAreNotAddedWhenPropertyValueIsEmpty()
+    void selectedProjectsAreNotAddedWhenPropertyValueIsEmpty()
     {
         MavenExecutionRequest request = new DefaultMavenExecutionRequest();
         Properties properties = new Properties();
@@ -90,7 +90,7 @@ public class DefaultBuildResumptionDataRepositoryTest
     }
 
     @Test
-    public void applyResumptionData_shouldLoadData()
+    void applyResumptionData_shouldLoadData()
     {
         MavenExecutionRequest request = new DefaultMavenExecutionRequest();
         Build build = new Build();

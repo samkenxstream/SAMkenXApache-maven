@@ -39,26 +39,26 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 /**
  * @author Igor Fedorenko
  */
-public class DefaultMavenMetadataCacheTest
+class DefaultMavenMetadataCacheTest
 {
     private RepositorySystem repositorySystem;
 
     @BeforeEach
-    public void setUp()
+    void setUp()
         throws Exception
     {
         repositorySystem = new TestRepositorySystem( null, null );
     }
 
     @AfterEach
-    public void tearDown()
+    void tearDown()
         throws Exception
     {
         repositorySystem = null;
     }
 
     @Test
-    public void testCacheKey()
+    void testCacheKey()
         throws Exception
     {
         Artifact a1 = repositorySystem.createArtifact( "testGroup", "testArtifact", "1.2.3", "jar" );

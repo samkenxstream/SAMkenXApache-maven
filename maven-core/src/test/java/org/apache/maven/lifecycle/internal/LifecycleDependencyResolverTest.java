@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class LifecycleDependencyResolverTest extends AbstractCoreMavenComponentTestCase
+class LifecycleDependencyResolverTest extends AbstractCoreMavenComponentTestCase
 {
     @Inject
     private LifecycleDependencyResolver resolver;
@@ -50,7 +50,7 @@ public class LifecycleDependencyResolverTest extends AbstractCoreMavenComponentT
     }
 
     @Test
-    public void testCachedReactorProjectDependencies() throws Exception
+    void testCachedReactorProjectDependencies() throws Exception
     {
         MavenSession session = createMavenSession( new File( "src/test/projects/lifecycle-dependency-resolver/pom.xml" ), new Properties(), true );
         Collection<String> scopesToCollect = null;

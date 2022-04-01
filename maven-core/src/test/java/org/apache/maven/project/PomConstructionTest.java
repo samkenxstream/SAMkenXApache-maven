@@ -55,7 +55,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @PlexusTest
-public class PomConstructionTest
+class PomConstructionTest
 {
     private static String BASE_DIR = "src/test";
 
@@ -72,7 +72,7 @@ public class PomConstructionTest
     private File testDirectory;
 
     @BeforeEach
-    public void setUp()
+    void setUp()
         throws Exception
     {
         testDirectory = new File( getBasedir(), BASE_POM_DIR );
@@ -85,7 +85,7 @@ public class PomConstructionTest
      * @throws Exception in case of issue
      */
     @Test
-    public void testEmptyUrl()
+    void testEmptyUrl()
         throws Exception
     {
         buildPom( "empty-distMng-repo-url" );
@@ -98,7 +98,7 @@ public class PomConstructionTest
      */
     /* MNG-786*/
     @Test
-    public void testProfileModules()
+    void testProfileModules()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "profile-module", "a" );
@@ -116,7 +116,7 @@ public class PomConstructionTest
      * @throws Exception in case of issue
      */
     @Test
-    public void testParentInheritance()
+    void testParentInheritance()
         throws Exception
     {
         buildPom( "parent-inheritance/sub" );
@@ -124,7 +124,7 @@ public class PomConstructionTest
 
     /*MNG-3995*/
     @Test
-    public void testExecutionConfigurationJoin()
+    void testExecutionConfigurationJoin()
        throws Exception
     {
         PomTestWrapper pom = buildPom( "execution-configuration-join" );
@@ -133,7 +133,7 @@ public class PomConstructionTest
 
     /*MNG-3803*/
     @Test
-    public void testPluginConfigProperties()
+    void testPluginConfigProperties()
        throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-config-properties" );
@@ -142,7 +142,7 @@ public class PomConstructionTest
 
     /*MNG-3900*/
     @Test
-    public void testProfilePropertiesInterpolation()
+    void testProfilePropertiesInterpolation()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "profile-properties-interpolation", "interpolation-profile" );
@@ -174,7 +174,7 @@ public class PomConstructionTest
 
     /*MNG- 4010*/
     @Test
-    public void testDuplicateExclusionsDependency()
+    void testDuplicateExclusionsDependency()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "duplicate-exclusions-dependency/sub" );
@@ -184,7 +184,7 @@ public class PomConstructionTest
 
     /*MNG- 4008*/
     @Test
-    public void testMultipleFilters()
+    void testMultipleFilters()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "multiple-filters" );
@@ -254,7 +254,7 @@ public class PomConstructionTest
     */
 
     @Test
-    public void testDuplicateDependenciesCauseLastDeclarationToBePickedInLenientMode()
+    void testDuplicateDependenciesCauseLastDeclarationToBePickedInLenientMode()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "unique-dependency-key/deps", true, null, null );
@@ -264,7 +264,7 @@ public class PomConstructionTest
 
     /* MNG-3567*/
     @Test
-    public void testParentInterpolation()
+    void testParentInterpolation()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "parent-interpolation/sub" );
@@ -416,7 +416,7 @@ public class PomConstructionTest
 
     /** MNG-3965 */
     @Test
-    public void testMultipleExecutionIds()
+    void testMultipleExecutionIds()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "dual-execution-ids/sub" );
@@ -425,14 +425,14 @@ public class PomConstructionTest
 
     /** MNG-3997 */
     @Test
-    public void testConsecutiveEmptyElements()
+    void testConsecutiveEmptyElements()
         throws Exception
     {
         buildPom( "consecutive_empty_elements" );
     }
 
     @Test
-    public void testOrderOfGoalsFromPluginExecutionWithoutPluginManagement()
+    void testOrderOfGoalsFromPluginExecutionWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-goals-order/wo-plugin-mgmt" );
@@ -446,7 +446,7 @@ public class PomConstructionTest
 
     /* MNG-3886*/
     @Test
-    public void testOrderOfGoalsFromPluginExecutionWithPluginManagement()
+    void testOrderOfGoalsFromPluginExecutionWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-goals-order/w-plugin-mgmt" );
@@ -459,7 +459,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testOrderOfPluginExecutionsWithoutPluginManagement()
+    void testOrderOfPluginExecutionsWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-order/wo-plugin-mgmt" );
@@ -473,7 +473,7 @@ public class PomConstructionTest
 
     /* MNG-3887 */
     @Test
-    public void testOrderOfPluginExecutionsWithPluginManagement()
+    void testOrderOfPluginExecutionsWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-order/w-plugin-mgmt" );
@@ -486,7 +486,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testMergeOfPluginExecutionsWhenChildInheritsPluginVersion()
+    void testMergeOfPluginExecutionsWhenChildInheritsPluginVersion()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-merging-wo-version/sub" );
@@ -495,7 +495,7 @@ public class PomConstructionTest
 
     /* MNG-3943*/
     @Test
-    public void testMergeOfPluginExecutionsWhenChildAndParentUseDifferentPluginVersions()
+    void testMergeOfPluginExecutionsWhenChildAndParentUseDifferentPluginVersions()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-merging-version-insensitive/sub" );
@@ -504,7 +504,7 @@ public class PomConstructionTest
 
 
     @Test
-    public void testInterpolationWithXmlMarkup()
+    void testInterpolationWithXmlMarkup()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "xml-markup-interpolation" );
@@ -513,7 +513,7 @@ public class PomConstructionTest
 
     /* MNG-3925 */
     @Test
-    public void testOrderOfMergedPluginExecutionsWithoutPluginManagement()
+    void testOrderOfMergedPluginExecutionsWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "merged-plugin-exec-order/wo-plugin-mgmt/sub" );
@@ -526,7 +526,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testOrderOfMergedPluginExecutionsWithPluginManagement()
+    void testOrderOfMergedPluginExecutionsWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "merged-plugin-exec-order/w-plugin-mgmt/sub" );
@@ -540,7 +540,7 @@ public class PomConstructionTest
 
     /* MNG-3984*/
     @Test
-    public void testDifferentContainersWithSameId()
+    void testDifferentContainersWithSameId()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "join-different-containers-same-id" );
@@ -550,7 +550,7 @@ public class PomConstructionTest
 
     /* MNG-3937*/
     @Test
-    public void testOrderOfMergedPluginExecutionGoalsWithoutPluginManagement()
+    void testOrderOfMergedPluginExecutionGoalsWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "merged-plugin-exec-goals-order/wo-plugin-mgmt/sub" );
@@ -564,7 +564,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testOrderOfMergedPluginExecutionGoalsWithPluginManagement()
+    void testOrderOfMergedPluginExecutionGoalsWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "merged-plugin-exec-goals-order/w-plugin-mgmt/sub" );
@@ -578,7 +578,7 @@ public class PomConstructionTest
 
     /*MNG-3938*/
     @Test
-    public void testOverridingOfInheritedPluginExecutionsWithoutPluginManagement()
+    void testOverridingOfInheritedPluginExecutionsWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-merging/wo-plugin-mgmt/sub" );
@@ -589,7 +589,7 @@ public class PomConstructionTest
 
     /* MNG-3938 */
     @Test
-    public void testOverridingOfInheritedPluginExecutionsWithPluginManagement()
+    void testOverridingOfInheritedPluginExecutionsWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-merging/w-plugin-mgmt/sub" );
@@ -601,7 +601,7 @@ public class PomConstructionTest
 
     /* MNG-3906*/
     @Test
-    public void testOrderOfMergedPluginDependenciesWithoutPluginManagement()
+    void testOrderOfMergedPluginDependenciesWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "merged-plugin-class-path-order/wo-plugin-mgmt/sub" );
@@ -621,7 +621,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testOrderOfMergedPluginDependenciesWithPluginManagement()
+    void testOrderOfMergedPluginDependenciesWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "merged-plugin-class-path-order/w-plugin-mgmt/sub" );
@@ -639,7 +639,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testInterpolationOfNestedBuildDirectories()
+    void testInterpolationOfNestedBuildDirectories()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "nested-build-dir-interpolation" );
@@ -652,7 +652,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testAppendArtifactIdOfChildToInheritedUrls()
+    void testAppendArtifactIdOfChildToInheritedUrls()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "url-inheritance/sub" );
@@ -672,7 +672,7 @@ public class PomConstructionTest
 
     /* MNG-3846*/
     @Test
-    public void testAppendArtifactIdOfParentAndChildToInheritedUrls()
+    void testAppendArtifactIdOfParentAndChildToInheritedUrls()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "url-inheritance/another-parent/sub" );
@@ -691,7 +691,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testNonInheritedElementsInSubtreesOverriddenByChild()
+    void testNonInheritedElementsInSubtreesOverriddenByChild()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "limited-inheritance/child" );
@@ -714,7 +714,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testXmlTextCoalescing()
+    void testXmlTextCoalescing()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "xml-coalesce-text" );
@@ -725,7 +725,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testFullInterpolationOfNestedExpressions()
+    void testFullInterpolationOfNestedExpressions()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "full-interpolation" );
@@ -737,7 +737,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testInterpolationOfLegacyExpressionsThatDontIncludeTheProjectPrefix()
+    void testInterpolationOfLegacyExpressionsThatDontIncludeTheProjectPrefix()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "unprefixed-expression-interpolation/child" );
@@ -772,7 +772,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testInterpolationWithBasedirAlignedDirectories()
+    void testInterpolationWithBasedirAlignedDirectories()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "basedir-aligned-interpolation" );
@@ -794,7 +794,7 @@ public class PomConstructionTest
 
     /* MNG-3944*/
     @Test
-    public void testInterpolationOfBasedirInPomWithUnusualName()
+    void testInterpolationOfBasedirInPomWithUnusualName()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "basedir-interpolation/pom-with-unusual-name.xml" );
@@ -804,7 +804,7 @@ public class PomConstructionTest
 
     /* MNG-3979 */
     @Test
-    public void testJoiningOfContainersWhenChildHasEmptyElements()
+    void testJoiningOfContainersWhenChildHasEmptyElements()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "id-container-joining-with-empty-elements/sub" );
@@ -812,7 +812,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testOrderOfPluginConfigurationElementsWithoutPluginManagement()
+    void testOrderOfPluginConfigurationElementsWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-config-order/wo-plugin-mgmt" );
@@ -824,7 +824,7 @@ public class PomConstructionTest
 
     /* MNG-3827*/
     @Test
-    public void testOrderOfPluginConfigurationElementsWithPluginManagement()
+    void testOrderOfPluginConfigurationElementsWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-config-order/w-plugin-mgmt" );
@@ -835,7 +835,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testOrderOfPluginExecutionConfigurationElementsWithoutPluginManagement()
+    void testOrderOfPluginExecutionConfigurationElementsWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-config-order/wo-plugin-mgmt" );
@@ -850,7 +850,7 @@ public class PomConstructionTest
 
     /* MNG-3864*/
     @Test
-    public void testOrderOfPluginExecutionConfigurationElementsWithPluginManagement()
+    void testOrderOfPluginExecutionConfigurationElementsWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-config-order/w-plugin-mgmt" );
@@ -865,7 +865,7 @@ public class PomConstructionTest
 
     /* MNG-3836*/
     @Test
-    public void testMergeOfInheritedPluginConfiguration()
+    void testMergeOfInheritedPluginConfiguration()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-config-merging/child" );
@@ -885,7 +885,7 @@ public class PomConstructionTest
 
     /* MNG-2591 */
     @Test
-    public void testAppendOfInheritedPluginConfigurationWithNoProfile()
+    void testAppendOfInheritedPluginConfigurationWithNoProfile()
         throws Exception
     {
         testAppendOfInheritedPluginConfiguration( "no-profile" );
@@ -893,7 +893,7 @@ public class PomConstructionTest
 
     /* MNG-2591*/
     @Test
-    public void testAppendOfInheritedPluginConfigurationWithActiveProfile()
+    void testAppendOfInheritedPluginConfigurationWithActiveProfile()
         throws Exception
     {
         testAppendOfInheritedPluginConfiguration( "with-profile" );
@@ -926,7 +926,7 @@ public class PomConstructionTest
 
     /* MNG-4000 */
     @Test
-    public void testMultiplePluginExecutionsWithAndWithoutIdsWithoutPluginManagement()
+    void testMultiplePluginExecutionsWithAndWithoutIdsWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-w-and-wo-id/wo-plugin-mgmt" );
@@ -936,7 +936,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testMultiplePluginExecutionsWithAndWithoutIdsWithPluginManagement()
+    void testMultiplePluginExecutionsWithAndWithoutIdsWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-w-and-wo-id/w-plugin-mgmt" );
@@ -946,7 +946,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testDependencyOrderWithoutPluginManagement()
+    void testDependencyOrderWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "dependency-order/wo-plugin-mgmt" );
@@ -958,7 +958,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testDependencyOrderWithPluginManagement()
+    void testDependencyOrderWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "dependency-order/w-plugin-mgmt" );
@@ -970,7 +970,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testBuildDirectoriesUsePlatformSpecificFileSeparator()
+    void testBuildDirectoriesUsePlatformSpecificFileSeparator()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "platform-file-separator" );
@@ -987,7 +987,7 @@ public class PomConstructionTest
 
     /* MNG-4008 */
     @Test
-    public void testMergedFilterOrder()
+    void testMergedFilterOrder()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "merged-filter-order/sub" );
@@ -1004,7 +1004,7 @@ public class PomConstructionTest
 
     /** MNG-4027*/
     @Test
-    public void testProfileInjectedDependencies()
+    void testProfileInjectedDependencies()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "profile-injected-dependencies" );
@@ -1017,7 +1017,7 @@ public class PomConstructionTest
 
     /** IT-0021*/
     @Test
-    public void testProfileDependenciesMultipleProfiles()
+    void testProfileDependenciesMultipleProfiles()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "profile-dependencies-multiple-profiles", "profile-1", "profile-2" );
@@ -1025,7 +1025,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testDependencyInheritance()
+    void testDependencyInheritance()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "dependency-inheritance/sub" );
@@ -1035,7 +1035,7 @@ public class PomConstructionTest
 
     /** MNG-4034 */
     @Test
-    public void testManagedProfileDependency()
+    void testManagedProfileDependency()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "managed-profile-dependency/sub", "maven-core-it" );
@@ -1050,7 +1050,7 @@ public class PomConstructionTest
 
     /** MNG-4040 */
     @Test
-    public void testProfileModuleInheritance()
+    void testProfileModuleInheritance()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "profile-module-inheritance/sub", "dist" );
@@ -1059,7 +1059,7 @@ public class PomConstructionTest
 
     /** MNG-3621 */
     @Test
-    public void testUncPath()
+    void testUncPath()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "unc-path/sub" );
@@ -1068,7 +1068,7 @@ public class PomConstructionTest
 
     /** MNG-2006 */
     @Test
-    public void testUrlAppendWithChildPathAdjustment()
+    void testUrlAppendWithChildPathAdjustment()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "url-append/child" );
@@ -1081,7 +1081,7 @@ public class PomConstructionTest
 
     /** MNG-0479 */
     @Test
-    public void testRepoInheritance()
+    void testRepoInheritance()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "repo-inheritance" );
@@ -1090,7 +1090,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testEmptyScm()
+    void testEmptyScm()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "empty-scm" );
@@ -1098,7 +1098,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPluginConfigurationUsingAttributesWithoutPluginManagement()
+    void testPluginConfigurationUsingAttributesWithoutPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-config-attributes/wo-plugin-mgmt" );
@@ -1111,7 +1111,7 @@ public class PomConstructionTest
 
     /** MNG-4053*/
     @Test
-    public void testPluginConfigurationUsingAttributesWithPluginManagement()
+    void testPluginConfigurationUsingAttributesWithPluginManagement()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-config-attributes/w-plugin-mgmt" );
@@ -1123,7 +1123,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPluginConfigurationUsingAttributesWithPluginManagementAndProfile()
+    void testPluginConfigurationUsingAttributesWithPluginManagementAndProfile()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-config-attributes/w-profile", "maven-core-it" );
@@ -1135,7 +1135,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPomEncoding()
+    void testPomEncoding()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "pom-encoding/utf-8" );
@@ -1146,7 +1146,7 @@ public class PomConstructionTest
 
     /* MNG-4070 */
     @Test
-    public void testXmlWhitespaceHandling()
+    void testXmlWhitespaceHandling()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "xml-whitespace/sub" );
@@ -1155,7 +1155,7 @@ public class PomConstructionTest
 
     /* MNG-3760*/
     @Test
-    public void testInterpolationOfBaseUri()
+    void testInterpolationOfBaseUri()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "baseuri-interpolation/pom.xml" );
@@ -1164,7 +1164,7 @@ public class PomConstructionTest
 
     /* MNG-6386 */
     @Test
-    public void testInterpolationOfRfc3986BaseUri()
+    void testInterpolationOfRfc3986BaseUri()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "baseuri-interpolation/pom.xml" );
@@ -1175,7 +1175,7 @@ public class PomConstructionTest
 
     /* MNG-3811*/
     @Test
-    public void testReportingPluginConfig()
+    void testReportingPluginConfig()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "reporting-plugin-config/sub" );
@@ -1188,7 +1188,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPropertiesNoDuplication()
+    void testPropertiesNoDuplication()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "properties-no-duplication/sub" );
@@ -1197,7 +1197,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPomInheritance()
+    void testPomInheritance()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "pom-inheritance/sub" );
@@ -1206,7 +1206,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testCompleteModelWithoutParent()
+    void testCompleteModelWithoutParent()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "complete-model/wo-parent" );
@@ -1215,7 +1215,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testCompleteModelWithParent()
+    void testCompleteModelWithParent()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "complete-model/w-parent/sub" );
@@ -1431,7 +1431,7 @@ public class PomConstructionTest
 
     /* MNG-2309*/
     @Test
-    public void testProfileInjectionOrder()
+    void testProfileInjectionOrder()
         throws Exception
     {
         PomTestWrapper pom =
@@ -1440,7 +1440,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPropertiesInheritance()
+    void testPropertiesInheritance()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "properties-inheritance/sub" );
@@ -1451,7 +1451,7 @@ public class PomConstructionTest
 
     /* MNG-4102*/
     @Test
-    public void testInheritedPropertiesInterpolatedWithValuesFromChildWithoutProfiles()
+    void testInheritedPropertiesInterpolatedWithValuesFromChildWithoutProfiles()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "inherited-properties-interpolation/no-profile/sub" );
@@ -1462,7 +1462,7 @@ public class PomConstructionTest
 
     /* MNG-4102 */
     @Test
-    public void testInheritedPropertiesInterpolatedWithValuesFromChildWithActiveProfiles()
+    void testInheritedPropertiesInterpolatedWithValuesFromChildWithActiveProfiles()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "inherited-properties-interpolation/active-profile/sub" );
@@ -1476,7 +1476,7 @@ public class PomConstructionTest
 
     /* MNG-3545 */
     @Test
-    public void testProfileDefaultActivation()
+    void testProfileDefaultActivation()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "profile-default-deactivation", "profile4" );
@@ -1487,7 +1487,7 @@ public class PomConstructionTest
 
     /* MNG-1995 */
     @Test
-    public void testBooleanInterpolation()
+    void testBooleanInterpolation()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "boolean-interpolation" );
@@ -1498,7 +1498,7 @@ public class PomConstructionTest
 
     /* MNG-3899 */
     @Test
-    public void testBuildExtensionInheritance()
+    void testBuildExtensionInheritance()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "build-extension-inheritance/sub" );
@@ -1511,7 +1511,7 @@ public class PomConstructionTest
 
     /*MNG-1957*/
     @Test
-    public void testJdkActivation()
+    void testJdkActivation()
         throws Exception
     {
         Properties props = new Properties();
@@ -1526,7 +1526,7 @@ public class PomConstructionTest
 
     /* MNG-2174 */
     @Test
-    public void testProfilePluginMngDependencies()
+    void testProfilePluginMngDependencies()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "profile-plugin-mng-dependencies/sub", "maven-core-it" );
@@ -1535,7 +1535,7 @@ public class PomConstructionTest
 
     /** MNG-4116 */
     @Test
-    public void testPercentEncodedUrlsMustNotBeDecoded()
+    void testPercentEncodedUrlsMustNotBeDecoded()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "url-no-decoding" );
@@ -1554,7 +1554,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPluginManagementInheritance()
+    void testPluginManagementInheritance()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "plugin-management-inheritance" );
@@ -1563,7 +1563,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testProfilePlugins()
+    void testProfilePlugins()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "profile-plugins", "standard" );
@@ -1572,7 +1572,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPluginInheritanceSimple()
+    void testPluginInheritanceSimple()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "plugin-inheritance-simple/sub" );
@@ -1580,7 +1580,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPluginManagementDuplicate()
+    void testPluginManagementDuplicate()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "plugin-management-duplicate/sub" );
@@ -1588,7 +1588,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testDistributionManagement()
+    void testDistributionManagement()
         throws Exception
     {
         PomTestWrapper pom = this.buildPom( "distribution-management" );
@@ -1596,7 +1596,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testDependencyScopeInheritance()
+    void testDependencyScopeInheritance()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "dependency-scope-inheritance/sub" );
@@ -1605,7 +1605,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testDependencyScope()
+    void testDependencyScope()
         throws Exception
     {
         buildPom( "dependency-scope/sub" );
@@ -1619,7 +1619,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testInterpolationWithSystemProperty()
+    void testInterpolationWithSystemProperty()
         throws Exception
     {
         Properties sysProps = new Properties();
@@ -1630,7 +1630,7 @@ public class PomConstructionTest
 
     /* MNG-4129 */
     @Test
-    public void testPluginExecutionInheritanceWhenChildDoesNotDeclarePlugin()
+    void testPluginExecutionInheritanceWhenChildDoesNotDeclarePlugin()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-inheritance/wo-merge" );
@@ -1642,7 +1642,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPluginExecutionInheritanceWhenChildDoesDeclarePluginAsWell()
+    void testPluginExecutionInheritanceWhenChildDoesDeclarePluginAsWell()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-inheritance/w-merge" );
@@ -1655,7 +1655,7 @@ public class PomConstructionTest
 
     /* MNG-4193 */
     @Test
-    public void testValidationErrorUponNonUniqueArtifactRepositoryId()
+    void testValidationErrorUponNonUniqueArtifactRepositoryId()
         throws Exception
     {
         assertThrows(
@@ -1666,7 +1666,7 @@ public class PomConstructionTest
 
     /* MNG-4193 */
     @Test
-    public void testValidationErrorUponNonUniquePluginRepositoryId()
+    void testValidationErrorUponNonUniquePluginRepositoryId()
         throws Exception
     {
         assertThrows(
@@ -1677,7 +1677,7 @@ public class PomConstructionTest
 
     /* MNG-4193 */
     @Test
-    public void testValidationErrorUponNonUniqueArtifactRepositoryIdInProfile()
+    void testValidationErrorUponNonUniqueArtifactRepositoryIdInProfile()
         throws Exception
     {
         assertThrows(
@@ -1688,7 +1688,7 @@ public class PomConstructionTest
 
     /* MNG-4193 */
     @Test
-    public void testValidationErrorUponNonUniquePluginRepositoryIdInProfile()
+    void testValidationErrorUponNonUniquePluginRepositoryIdInProfile()
         throws Exception
     {
         assertThrows(
@@ -1699,7 +1699,7 @@ public class PomConstructionTest
 
     /** MNG-3843 */
     @Test
-    public void testPrerequisitesAreNotInherited()
+    void testPrerequisitesAreNotInherited()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "prerequisites-inheritance/child" );
@@ -1707,7 +1707,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testLicensesAreInheritedButNotAggregated()
+    void testLicensesAreInheritedButNotAggregated()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "licenses-inheritance/child-2" );
@@ -1717,7 +1717,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testDevelopersAreInheritedButNotAggregated()
+    void testDevelopersAreInheritedButNotAggregated()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "developers-inheritance/child-2" );
@@ -1726,7 +1726,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testContributorsAreInheritedButNotAggregated()
+    void testContributorsAreInheritedButNotAggregated()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "contributors-inheritance/child-2" );
@@ -1735,7 +1735,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testMailingListsAreInheritedButNotAggregated()
+    void testMailingListsAreInheritedButNotAggregated()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "mailing-lists-inheritance/child-2" );
@@ -1744,7 +1744,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPluginInheritanceOrder()
+    void testPluginInheritanceOrder()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-inheritance-order/child" );
@@ -1759,7 +1759,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testCliPropsDominateProjectPropsDuringInterpolation()
+    void testCliPropsDominateProjectPropsDuringInterpolation()
         throws Exception
     {
         Properties props = new Properties();
@@ -1770,7 +1770,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testParentPomPackagingMustBePom()
+    void testParentPomPackagingMustBePom()
         throws Exception
     {
         assertThrows(
@@ -1781,7 +1781,7 @@ public class PomConstructionTest
 
     /** MNG-522, MNG-3018 */
     @Test
-    public void testManagedPluginConfigurationAppliesToImplicitPluginsIntroducedByPackaging()
+    void testManagedPluginConfigurationAppliesToImplicitPluginsIntroducedByPackaging()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-management-for-implicit-plugin/child" );
@@ -1792,7 +1792,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testDefaultPluginsExecutionContributedByPackagingExecuteBeforeUserDefinedExecutions()
+    void testDefaultPluginsExecutionContributedByPackagingExecuteBeforeUserDefinedExecutions()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-order-and-default-exec" );
@@ -1808,7 +1808,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testPluginDeclarationsRetainPomOrderAfterInjectionOfDefaultPlugins()
+    void testPluginDeclarationsRetainPomOrderAfterInjectionOfDefaultPlugins()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-exec-order-with-lifecycle" );
@@ -1835,7 +1835,7 @@ public class PomConstructionTest
 
     /** MNG-4415 */
     @Test
-    public void testPluginOrderAfterMergingWithInheritedPlugins()
+    void testPluginOrderAfterMergingWithInheritedPlugins()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-inheritance-merge-order/sub" );
@@ -1865,7 +1865,7 @@ public class PomConstructionTest
 
     /** MNG-4416 */
     @Test
-    public void testPluginOrderAfterMergingWithInjectedPlugins()
+    void testPluginOrderAfterMergingWithInjectedPlugins()
         throws Exception
     {
         PomTestWrapper pom = buildPom( "plugin-injection-merge-order" );
@@ -1894,7 +1894,7 @@ public class PomConstructionTest
     }
 
     @Test
-    public void testProjectArtifactIdIsNotInheritedButMandatory()
+    void testProjectArtifactIdIsNotInheritedButMandatory()
         throws Exception
     {
         assertThrows(

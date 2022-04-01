@@ -35,7 +35,7 @@ import static org.mockito.Mockito.mock;
 /**
  * @author <a href="mailto:jason@maven.org">Jason van Zyl</a>
  */
-public class ArtifactInstallerTest
+class ArtifactInstallerTest
     extends AbstractArtifactComponentTestCase
 {
     @Inject
@@ -50,7 +50,7 @@ public class ArtifactInstallerTest
     }
 
     @Test
-    public void testArtifactInstallation()
+    void testArtifactInstallation()
         throws Exception
     {
         sessionScope.enter();

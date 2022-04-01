@@ -59,7 +59,7 @@ import javax.inject.Inject;
 /**
  * @author Jason van Zyl
  */
-public class PluginParameterExpressionEvaluatorTest
+class PluginParameterExpressionEvaluatorTest
     extends AbstractCoreMavenComponentTestCase
 {
     private static final String FS = File.separator;
@@ -68,7 +68,7 @@ public class PluginParameterExpressionEvaluatorTest
     private RepositorySystem factory;
 
     @Test
-    public void testPluginDescriptorExpressionReference()
+    void testPluginDescriptorExpressionReference()
         throws Exception
     {
         MojoExecution exec = newMojoExecution();
@@ -85,7 +85,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testPluginArtifactsExpressionReference()
+    void testPluginArtifactsExpressionReference()
         throws Exception
     {
         MojoExecution exec = newMojoExecution();
@@ -111,7 +111,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testPluginArtifactMapExpressionReference()
+    void testPluginArtifactMapExpressionReference()
         throws Exception
     {
         MojoExecution exec = newMojoExecution();
@@ -139,7 +139,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testPluginArtifactIdExpressionReference()
+    void testPluginArtifactIdExpressionReference()
         throws Exception
     {
         MojoExecution exec = newMojoExecution();
@@ -156,7 +156,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testValueExtractionWithAPomValueContainingAPath()
+    void testValueExtractionWithAPomValueContainingAPath()
         throws Exception
     {
         String expected = getTestFile( "target/test-classes/target/classes" ).getCanonicalPath();
@@ -179,7 +179,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testEscapedVariablePassthrough()
+    void testEscapedVariablePassthrough()
         throws Exception
     {
         String var = "${var}";
@@ -197,7 +197,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testEscapedVariablePassthroughInLargerExpression()
+    void testEscapedVariablePassthroughInLargerExpression()
         throws Exception
     {
         String var = "${var}";
@@ -216,7 +216,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testMultipleSubExpressionsInLargerExpression()
+    void testMultipleSubExpressionsInLargerExpression()
         throws Exception
     {
         String key = "${project.artifactId} with version: ${project.version}";
@@ -235,7 +235,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testMissingPOMPropertyRefInLargerExpression()
+    void testMissingPOMPropertyRefInLargerExpression()
         throws Exception
     {
         String expr = "/path/to/someproject-${baseVersion}";
@@ -250,7 +250,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testPOMPropertyExtractionWithMissingProject_WithDotNotation()
+    void testPOMPropertyExtractionWithMissingProject_WithDotNotation()
         throws Exception
     {
         String key = "m2.name";
@@ -272,7 +272,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testBasedirExtractionWithMissingProject()
+    void testBasedirExtractionWithMissingProject()
         throws Exception
     {
         ExpressionEvaluator ee = createExpressionEvaluator( null, null, new Properties() );
@@ -283,7 +283,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testValueExtractionFromSystemPropertiesWithMissingProject()
+    void testValueExtractionFromSystemPropertiesWithMissingProject()
         throws Exception
     {
         String sysprop = "PPEET_sysprop1";
@@ -303,7 +303,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testValueExtractionFromSystemPropertiesWithMissingProject_WithDotNotation()
+    void testValueExtractionFromSystemPropertiesWithMissingProject_WithDotNotation()
         throws Exception
     {
         String sysprop = "PPEET.sysprop2";
@@ -336,7 +336,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testLocalRepositoryExtraction()
+    void testLocalRepositoryExtraction()
         throws Exception
     {
         ExpressionEvaluator expressionEvaluator =
@@ -347,7 +347,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testTwoExpressions()
+    void testTwoExpressions()
         throws Exception
     {
         Build build = new Build();
@@ -366,7 +366,7 @@ public class PluginParameterExpressionEvaluatorTest
     }
 
     @Test
-    public void testShouldExtractPluginArtifacts()
+    void testShouldExtractPluginArtifacts()
         throws Exception
     {
         PluginDescriptor pd = new PluginDescriptor();

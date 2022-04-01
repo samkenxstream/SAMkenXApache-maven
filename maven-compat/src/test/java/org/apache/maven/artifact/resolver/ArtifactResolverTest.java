@@ -52,7 +52,7 @@ import javax.inject.Inject;
 /**
  * @author Jason van Zyl
  */
-public class ArtifactResolverTest
+class ArtifactResolverTest
     extends AbstractArtifactComponentTestCase
 {
     @Inject

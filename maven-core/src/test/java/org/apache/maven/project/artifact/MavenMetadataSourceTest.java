@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @PlexusTest
-public class MavenMetadataSourceTest
+class MavenMetadataSourceTest
 {
     @Inject
     private RepositorySystem repositorySystem;
@@ -38,7 +38,7 @@ public class MavenMetadataSourceTest
 
     @Test
     @Disabled
-    public void testShouldNotCarryExclusionsOverFromDependencyToDependency()
+    void testShouldNotCarryExclusionsOverFromDependencyToDependency()
         throws Exception
     {
         /*
@@ -88,7 +88,7 @@ public class MavenMetadataSourceTest
 
     @Test
     @Disabled("TODO restore these if it makes sense")
-    public void testShouldUseCompileScopeIfDependencyScopeEmpty()
+    void testShouldUseCompileScopeIfDependencyScopeEmpty()
         throws Exception
     {
         /*
@@ -128,7 +128,7 @@ public class MavenMetadataSourceTest
 
     @Test
     @Disabled
-    public void testShouldUseInjectedTestScopeFromDependencyManagement()
+    void testShouldUseInjectedTestScopeFromDependencyManagement()
         throws Exception
     {
         /*

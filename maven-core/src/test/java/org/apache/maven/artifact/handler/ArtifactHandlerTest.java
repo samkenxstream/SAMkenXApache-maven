@@ -33,13 +33,13 @@ import static org.codehaus.plexus.testing.PlexusExtension.getTestFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @PlexusTest
-public class ArtifactHandlerTest
+class ArtifactHandlerTest
 {
     @Inject
     PlexusContainer container;
 
     @Test
-    public void testAptConsistency()
+    void testAptConsistency()
         throws Exception
     {
         File apt = getTestFile( "src/site/apt/artifact-handlers.apt" );

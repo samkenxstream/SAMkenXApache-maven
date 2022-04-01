@@ -36,12 +36,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MavenProjectTest
+class MavenProjectTest
     extends AbstractMavenProjectTestCase
 {
 
     @Test
-    public void testShouldInterpretChildPathAdjustmentBasedOnModulePaths()
+    void testShouldInterpretChildPathAdjustmentBasedOnModulePaths()
         throws IOException
     {
         Model parentModel = new Model();
@@ -68,7 +68,7 @@ public class MavenProjectTest
     }
 
     @Test
-    public void testIdentityProtoInheritance()
+    void testIdentityProtoInheritance()
     {
         Parent parent = new Parent();
 
@@ -92,7 +92,7 @@ public class MavenProjectTest
     }
 
     @Test
-    public void testEmptyConstructor()
+    void testEmptyConstructor()
     {
         MavenProject project = new MavenProject();
 
@@ -101,7 +101,7 @@ public class MavenProjectTest
     }
 
     @Test
-    public void testClone()
+    void testClone()
         throws Exception
     {
         File f = getFileForClasspathResource( "canonical-pom.xml" );
@@ -115,7 +115,7 @@ public class MavenProjectTest
     }
 
     @Test
-    public void testCloneWithDependencyManagement()
+    void testCloneWithDependencyManagement()
         throws Exception
     {
         File f = getFileForClasspathResource( "dependencyManagement-pom.xml" );
@@ -139,7 +139,7 @@ public class MavenProjectTest
     }
 
     @Test
-    public void testGetModulePathAdjustment()
+    void testGetModulePathAdjustment()
         throws IOException
     {
         Model moduleModel = new Model();
@@ -159,7 +159,7 @@ public class MavenProjectTest
     }
 
     @Test
-    public void testCloneWithDistributionManagement()
+    void testCloneWithDistributionManagement()
         throws Exception
     {
 
@@ -171,7 +171,7 @@ public class MavenProjectTest
     }
 
     @Test
-    public void testCloneWithActiveProfile()
+    void testCloneWithActiveProfile()
         throws Exception
     {
 
@@ -192,7 +192,7 @@ public class MavenProjectTest
     }
 
     @Test
-    public void testCloneWithBaseDir()
+    void testCloneWithBaseDir()
         throws Exception
     {
         File f = getFileForClasspathResource( "canonical-pom.xml" );
@@ -204,7 +204,7 @@ public class MavenProjectTest
     }
 
     @Test
-    public void testUndefinedOutputDirectory()
+    void testUndefinedOutputDirectory()
         throws Exception
     {
         MavenProject p = new MavenProject();
@@ -215,7 +215,7 @@ public class MavenProjectTest
     }
 
     @Test
-    public void testAddDotFile()
+    void testAddDotFile()
     {
         MavenProject project = new MavenProject();
 

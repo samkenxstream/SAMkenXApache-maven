@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *
  */
 
-public class DefaultGraphConflictResolutionPolicyTest
+class DefaultGraphConflictResolutionPolicyTest
 {
     GraphConflictResolutionPolicy policy;
     MetadataGraphEdge e1;
@@ -34,7 +34,7 @@ public class DefaultGraphConflictResolutionPolicyTest
     MetadataGraphEdge e3;
     //------------------------------------------------------------------------------------------
 	@BeforeEach
-    public void setUp() throws Exception
+  void setUp() throws Exception
 	{
 		policy = new DefaultGraphConflictResolutionPolicy();
     	e1 = new MetadataGraphEdge( "1.1", true, null, null, 2, 1 );
@@ -43,7 +43,7 @@ public class DefaultGraphConflictResolutionPolicyTest
 	}
     //------------------------------------------------------------------------------------------
 	@Test
-    public void testDefaultPolicy()
+  void testDefaultPolicy()
         throws Exception
     {
         MetadataGraphEdge res;

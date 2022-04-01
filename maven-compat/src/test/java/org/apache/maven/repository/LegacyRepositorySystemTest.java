@@ -52,7 +52,7 @@ import javax.inject.Inject;
  * @author Benjamin Bentmann
  */
 @PlexusTest
-public class LegacyRepositorySystemTest
+class LegacyRepositorySystemTest
 {
     @Inject
     private RepositorySystem repositorySystem;
@@ -89,7 +89,7 @@ public class LegacyRepositorySystemTest
     }
 
     @Test
-    public void testThatASystemScopedDependencyIsNotResolvedFromRepositories()
+    void testThatASystemScopedDependencyIsNotResolvedFromRepositories()
         throws Exception
     {
         //
@@ -172,7 +172,7 @@ public class LegacyRepositorySystemTest
     }
 
     @Test
-    public void testLocalRepositoryBasedir()
+    void testLocalRepositoryBasedir()
         throws Exception
     {
         File localRepoDir = new File( "" ).getAbsoluteFile();

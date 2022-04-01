@@ -26,10 +26,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class MojoExecutionScopeTest
+class MojoExecutionScopeTest
 {
     @Test
-    public void testNestedEnter()
+    void testNestedEnter()
         throws Exception
     {
         MojoExecutionScope scope = new MojoExecutionScope();
@@ -54,7 +54,7 @@ public class MojoExecutionScopeTest
     }
 
     @Test
-    public void testMultiKeyInstance()
+    void testMultiKeyInstance()
         throws Exception
     {
         MojoExecutionScope scope = new MojoExecutionScope();

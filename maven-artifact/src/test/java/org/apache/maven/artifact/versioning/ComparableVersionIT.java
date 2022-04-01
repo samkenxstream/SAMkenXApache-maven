@@ -33,11 +33,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ComparableVersionIT
+class ComparableVersionIT
 {
 
     @Test
-    public void test()
+    void test()
         throws Exception
     {
         Files.walkFileTree( Paths.get( "target" ), new SimpleFileVisitor<Path>()

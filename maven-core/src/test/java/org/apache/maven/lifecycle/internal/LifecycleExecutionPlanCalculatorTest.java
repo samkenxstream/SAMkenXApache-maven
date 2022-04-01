@@ -35,7 +35,7 @@ public class LifecycleExecutionPlanCalculatorTest
 {
 
     @Test
-    public void testCalculateExecutionPlanWithGoalTasks()
+    void testCalculateExecutionPlanWithGoalTasks()
         throws Exception
     {
         MojoDescriptorCreator mojoDescriptorCreator = createMojoDescriptorCreator();

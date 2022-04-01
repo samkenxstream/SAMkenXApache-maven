@@ -52,7 +52,7 @@ public class PluginManagerTest
     }
 
     @Test
-    public void testPluginLoading()
+    void testPluginLoading()
         throws Exception
     {
         MavenSession session = createMavenSession( null );
@@ -67,7 +67,7 @@ public class PluginManagerTest
     }
 
     @Test
-    public void testMojoDescriptorRetrieval()
+    void testMojoDescriptorRetrieval()
         throws Exception
     {
         MavenSession session = createMavenSession( null );
@@ -104,7 +104,7 @@ public class PluginManagerTest
     //      the plugin manager provides.
 
     @Test
-    public void testRemoteResourcesPlugin()
+    void testRemoteResourcesPlugin()
         throws Exception
     {
         //TODO turn an equivalent back on when the RR plugin is released.
@@ -158,7 +158,7 @@ public class PluginManagerTest
     }
 
     @Test
-    public void testMojoConfigurationIsMergedCorrectly()
+    void testMojoConfigurationIsMergedCorrectly()
         throws Exception
     {
     }
@@ -169,7 +169,7 @@ public class PluginManagerTest
      * to use a specific version. We need to make sure the version that they specify takes precedence.
      */
     @Test
-    public void testMojoWhereInternallyStatedDependencyIsOverriddenByProject()
+    void testMojoWhereInternallyStatedDependencyIsOverriddenByProject()
         throws Exception
     {
     }
@@ -179,7 +179,7 @@ public class PluginManagerTest
      * the current build.
      */
     @Test
-    public void testMojoThatIsPresentInTheCurrentBuild()
+    void testMojoThatIsPresentInTheCurrentBuild()
         throws Exception
     {
     }
@@ -189,7 +189,7 @@ public class PluginManagerTest
      * with the results of each project.
      */
     @Test
-    public void testAggregatorMojo()
+    void testAggregatorMojo()
         throws Exception
     {
     }
@@ -199,7 +199,7 @@ public class PluginManagerTest
      * anything useful.
      */
     @Test
-    public void testMojoThatRequiresExecutionToAGivenPhaseBeforeExecutingItself()
+    void testMojoThatRequiresExecutionToAGivenPhaseBeforeExecutingItself()
         throws Exception
     {
     }
@@ -211,7 +211,7 @@ public class PluginManagerTest
     // test a build where projects use different versions of the same plugin
 
     @Test
-    public void testThatPluginDependencyThatHasSystemScopeIsResolved()
+    void testThatPluginDependencyThatHasSystemScopeIsResolved()
         throws Exception
     {
         MavenSession session = createMavenSession( getProject( "project-contributing-system-scope-plugin-dep" ) );
@@ -255,7 +255,7 @@ public class PluginManagerTest
     }
 
     @Test
-    public void testPluginRealmCache()
+    void testPluginRealmCache()
         throws Exception
     {
         RepositoryRequest repositoryRequest = new DefaultRepositoryRequest();
@@ -300,7 +300,7 @@ public class PluginManagerTest
     }
 
     @Test
-    public void testBuildExtensionsPluginLoading()
+    void testBuildExtensionsPluginLoading()
         throws Exception
     {
         RepositoryRequest repositoryRequest = new DefaultRepositoryRequest();

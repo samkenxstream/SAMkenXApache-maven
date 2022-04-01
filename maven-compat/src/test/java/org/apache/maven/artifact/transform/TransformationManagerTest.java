@@ -32,13 +32,13 @@ import javax.inject.Inject;
 
 /** @author Jason van Zyl */
 @PlexusTest
-public class TransformationManagerTest
+class TransformationManagerTest
 {
     @Inject
     ArtifactTransformationManager tm;
 
     @Test
-    public void testTransformationManager()
+    void testTransformationManager()
     {
         List<ArtifactTransformation> tms = tm.getArtifactTransformations();
 

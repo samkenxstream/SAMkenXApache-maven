@@ -29,11 +29,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 /**
  * @author Kristian Rosenvold
  */
-public class MavenExecutionPlanTest
+class MavenExecutionPlanTest
 {
 
     @Test
-    public void testFindLastInPhase()
+    void testFindLastInPhase()
         throws Exception
     {
         MavenExecutionPlan plan = LifecycleExecutionPlanCalculatorStub.getProjectAExceutionPlan();
@@ -45,7 +45,7 @@ public class MavenExecutionPlanTest
     }
 
     @Test
-    public void testThreadSafeMojos()
+    void testThreadSafeMojos()
         throws Exception
     {
         MavenExecutionPlan plan = LifecycleExecutionPlanCalculatorStub.getProjectAExceutionPlan();
@@ -57,7 +57,7 @@ public class MavenExecutionPlanTest
 
 
     @Test
-    public void testFindLastWhenFirst()
+    void testFindLastWhenFirst()
         throws Exception
     {
         MavenExecutionPlan plan = LifecycleExecutionPlanCalculatorStub.getProjectAExceutionPlan();
@@ -68,7 +68,7 @@ public class MavenExecutionPlanTest
     }
 
     @Test
-    public void testFindLastInPhaseMisc()
+    void testFindLastInPhaseMisc()
         throws Exception
     {
         MavenExecutionPlan plan = LifecycleExecutionPlanCalculatorStub.getProjectAExceutionPlan();

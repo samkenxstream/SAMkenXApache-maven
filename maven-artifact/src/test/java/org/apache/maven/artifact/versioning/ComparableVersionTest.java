@@ -31,8 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author <a href="mailto:hboutemy@apache.org">Hervé Boutemy</a>
  */
-@SuppressWarnings( "unchecked" )
-public class ComparableVersionTest
+class ComparableVersionTest
 {
     private Comparable newComparable( String version )
     {
@@ -104,19 +103,19 @@ public class ComparableVersionTest
     }
 
     @Test
-    public void testVersionsQualifier()
+    void testVersionsQualifier()
     {
         checkVersionsOrder( VERSIONS_QUALIFIER );
     }
 
     @Test
-    public void testVersionsNumber()
+    void testVersionsNumber()
     {
         checkVersionsOrder( VERSIONS_NUMBER );
     }
 
     @Test
-    public void testVersionsEqual()
+    void testVersionsEqual()
     {
         newComparable( "1.0-alpha" );
         checkVersionsEqual( "1", "1" );
@@ -170,7 +169,7 @@ public class ComparableVersionTest
     }
 
     @Test
-    public void testVersionComparing()
+    void testVersionComparing()
     {
         checkVersionsOrder( "1", "2" );
         checkVersionsOrder( "1.5", "2" );
@@ -209,7 +208,7 @@ public class ComparableVersionTest
      * <a href="https://netbeans.org/bugzilla/show_bug.cgi?id=226100">226100</a>
      */
     @Test
-    public void testMng5568()
+    void testMng5568()
     {
         String a = "6.1.0";
         String b = "6.1.0rc3";
@@ -224,7 +223,7 @@ public class ComparableVersionTest
      * Test <a href="https://jira.apache.org/jira/browse/MNG-6572">MNG-6572</a> optimization.
      */
     @Test
-    public void testMng6572()
+    void testMng6572()
     {
         String a = "20190126.230843"; // resembles a SNAPSHOT
         String b = "1234567890.12345"; // 10 digit number
@@ -244,7 +243,7 @@ public class ComparableVersionTest
      * (related to MNG-6572 optimization)
      */
     @Test
-    public void testVersionEqualWithLeadingZeroes()
+    void testVersionEqualWithLeadingZeroes()
     {
         // versions with string lengths from 1 to 19
         String[] arr = new String[] {
@@ -277,7 +276,7 @@ public class ComparableVersionTest
      * (related to MNG-6572 optimization)
      */
     @Test
-    public void testVersionZeroEqualWithLeadingZeroes()
+    void testVersionZeroEqualWithLeadingZeroes()
     {
         // versions with string lengths from 1 to 19
         String[] arr = new String[] {
@@ -310,7 +309,7 @@ public class ComparableVersionTest
      * for qualifiers that start with "-0.", which was showing A == C and B == C but A &lt; B.
      */
     @Test
-    public void testMng6964()
+    void testMng6964()
     {
         String a = "1-0.alpha";
         String b = "1-0.beta";
@@ -322,7 +321,7 @@ public class ComparableVersionTest
     }
 
     @Test
-    public void testLocaleIndependent()
+    void testLocaleIndependent()
     {
         Locale orig = Locale.getDefault();
         Locale[] locales = { Locale.ENGLISH, new Locale( "tr" ), Locale.getDefault() };
@@ -341,7 +340,7 @@ public class ComparableVersionTest
     }
 
     @Test
-    public void testReuse()
+    void testReuse()
     {
         ComparableVersion c1 = new ComparableVersion( "1" );
         c1.parseVersion( "2" );

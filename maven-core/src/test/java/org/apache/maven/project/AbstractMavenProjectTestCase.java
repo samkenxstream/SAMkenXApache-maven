@@ -54,7 +54,7 @@ public abstract class AbstractMavenProjectTestCase
     }
 
     @BeforeEach
-    public void setUp()
+    void setUp()
         throws Exception
     {
         if ( getContainer().hasComponent( ProjectBuilder.class, "test" ) )

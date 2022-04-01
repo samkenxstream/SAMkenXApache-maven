@@ -318,7 +318,7 @@ class DefaultGraphBuilderTest
     }
 
     @BeforeEach
-    public void before() throws Exception
+    void before() throws Exception
     {
         graphBuilder = new DefaultGraphBuilder(
                 mock( BuildResumptionDataRepository.class ),

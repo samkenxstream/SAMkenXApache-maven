@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  *
  */
 @PlexusTest
-public class DefaultGraphConflictResolverTest
+class DefaultGraphConflictResolverTest
 {
     @Inject
     GraphConflictResolver resolver;
@@ -44,7 +44,7 @@ public class DefaultGraphConflictResolverTest
     MetadataGraphVertex v4;
     //------------------------------------------------------------------------------------------
 	@BeforeEach
-    public void setUp() throws Exception
+    void setUp() throws Exception
     {
         /*
          *       v2
@@ -73,7 +73,7 @@ public class DefaultGraphConflictResolverTest
     }
     //------------------------------------------------------------------------------------------
 	@Test
-    public void testCompileResolution()
+  void testCompileResolution()
     throws Exception
     {
         MetadataGraph res;
@@ -99,7 +99,7 @@ public class DefaultGraphConflictResolverTest
     }
     //------------------------------------------------------------------------------------------
 	@Test
-    public void testRuntimeResolution()
+  void testRuntimeResolution()
     throws Exception
     {
         MetadataGraph res;
@@ -124,7 +124,7 @@ public class DefaultGraphConflictResolverTest
     }
     //------------------------------------------------------------------------------------------
 	@Test
-    public void testTestResolution()
+  void testTestResolution()
     throws Exception
     {
         MetadataGraph res;

@@ -36,13 +36,13 @@ import javax.inject.Inject;
  * @author Benjamin Bentmann
  */
 @PlexusTest
-public class LegacyRepositorySystemTest
+class LegacyRepositorySystemTest
 {
     @Inject
     private RepositorySystem repositorySystem;
 
     @Test
-    public void testThatLocalRepositoryWithSpacesIsProperlyHandled()
+    void testThatLocalRepositoryWithSpacesIsProperlyHandled()
         throws Exception
     {
         File basedir = new File( "target/spacy path" ).getAbsoluteFile();
@@ -51,7 +51,7 @@ public class LegacyRepositorySystemTest
     }
 
     @Test
-    public void testAuthenticationHandling()
+    void testAuthenticationHandling()
     {
         Server server = new Server();
         server.setId( "repository" );

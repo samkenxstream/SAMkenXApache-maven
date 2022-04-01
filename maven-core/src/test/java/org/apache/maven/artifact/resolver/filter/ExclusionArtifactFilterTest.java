@@ -32,12 +32,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ExclusionArtifactFilterTest
+class ExclusionArtifactFilterTest
 {
     private Artifact artifact;
 
     @BeforeEach
-    public void setup()
+    void setup()
     {
         artifact = mock( Artifact.class );
         when( artifact.getGroupId() ).thenReturn( "org.apache.maven" );
@@ -45,7 +45,7 @@ public class ExclusionArtifactFilterTest
     }
 
     @Test
-    public void testExcludeExact()
+    void testExcludeExact()
     {
         Exclusion exclusion = new Exclusion();
         exclusion.setGroupId( "org.apache.maven" );
@@ -56,7 +56,7 @@ public class ExclusionArtifactFilterTest
     }
 
     @Test
-    public void testExcludeNoMatch()
+    void testExcludeNoMatch()
     {
         Exclusion exclusion = new Exclusion();
         exclusion.setGroupId( "org.apache.maven" );
@@ -67,7 +67,7 @@ public class ExclusionArtifactFilterTest
     }
 
     @Test
-    public void testExcludeGroupIdWildcard()
+    void testExcludeGroupIdWildcard()
     {
         Exclusion exclusion = new Exclusion();
         exclusion.setGroupId( "*" );
@@ -79,7 +79,7 @@ public class ExclusionArtifactFilterTest
 
 
     @Test
-    public void testExcludeGroupIdWildcardNoMatch()
+    void testExcludeGroupIdWildcardNoMatch()
     {
         Exclusion exclusion = new Exclusion();
         exclusion.setGroupId( "*" );
@@ -90,7 +90,7 @@ public class ExclusionArtifactFilterTest
     }
 
     @Test
-    public void testExcludeArtifactIdWildcard()
+    void testExcludeArtifactIdWildcard()
     {
         Exclusion exclusion = new Exclusion();
         exclusion.setGroupId( "org.apache.maven" );
@@ -101,7 +101,7 @@ public class ExclusionArtifactFilterTest
     }
 
     @Test
-    public void testExcludeArtifactIdWildcardNoMatch()
+    void testExcludeArtifactIdWildcardNoMatch()
     {
         Exclusion exclusion = new Exclusion();
         exclusion.setGroupId( "org.apache.groovy" );
@@ -112,7 +112,7 @@ public class ExclusionArtifactFilterTest
     }
 
     @Test
-    public void testExcludeAllWildcard()
+    void testExcludeAllWildcard()
     {
         Exclusion exclusion = new Exclusion();
         exclusion.setGroupId( "*" );
@@ -123,7 +123,7 @@ public class ExclusionArtifactFilterTest
     }
 
     @Test
-    public void testMultipleExclusionsExcludeArtifactIdWildcard()
+    void testMultipleExclusionsExcludeArtifactIdWildcard()
     {
         Exclusion exclusion1 = new Exclusion();
         exclusion1.setGroupId( "org.apache.groovy" );
@@ -139,7 +139,7 @@ public class ExclusionArtifactFilterTest
     }
 
     @Test
-    public void testMultipleExclusionsExcludeGroupIdWildcard()
+    void testMultipleExclusionsExcludeGroupIdWildcard()
     {
         Exclusion exclusion1 = new Exclusion();
         exclusion1.setGroupId( "*" );

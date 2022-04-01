@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * @author <a href="mailto:baerrach@apache.org">Barrie Treloar</a>
  */
-public class DefaultExceptionHandlerTest
+class DefaultExceptionHandlerTest
 {
     /**
      * Running Maven under JDK7 may cause connection issues because IPv6 is used by default.
@@ -50,7 +50,7 @@ public class DefaultExceptionHandlerTest
      * </p>
      */
     @Test
-    public void testJdk7ipv6()
+    void testJdk7ipv6()
     {
         ConnectException connEx = new ConnectException( "Connection refused: connect" );
         IOException ioEx = new IOException( "Unable to establish loopback connection", connEx );
@@ -66,7 +66,7 @@ public class DefaultExceptionHandlerTest
     }
 
     @Test
-    public void testHandleExceptionAetherClassNotFound()
+    void testHandleExceptionAetherClassNotFound()
     {
         Throwable cause2 = new NoClassDefFoundError( "org/sonatype/aether/RepositorySystem" );
         Plugin plugin = new Plugin();
@@ -85,7 +85,7 @@ public class DefaultExceptionHandlerTest
     }
 
     @Test
-    public void testHandleExceptionNoClassDefFoundErrorNull()
+    void testHandleExceptionNoClassDefFoundErrorNull()
     {
         Throwable cause2 = new NoClassDefFoundError();
         Plugin plugin = new Plugin();

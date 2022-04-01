@@ -53,7 +53,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import javax.inject.Inject;
 
-public class LifecycleExecutorTest
+class LifecycleExecutorTest
     extends AbstractCoreMavenComponentTestCase
 {
     @Inject
@@ -78,7 +78,7 @@ public class LifecycleExecutorTest
     // -----------------------------------------------------------------------------------------------
 
     @Test
-    public void testCalculationOfBuildPlanWithIndividualTaskWherePluginIsSpecifiedInThePom()
+    void testCalculationOfBuildPlanWithIndividualTaskWherePluginIsSpecifiedInThePom()
         throws Exception
     {
         // We are doing something like "mvn resources:resources" where no version is specified but this
@@ -99,7 +99,7 @@ public class LifecycleExecutorTest
     }
 
     @Test
-    public void testCalculationOfBuildPlanWithIndividualTaskOfTheCleanLifecycle()
+    void testCalculationOfBuildPlanWithIndividualTaskOfTheCleanLifecycle()
         throws Exception
     {
         // We are doing something like "mvn clean:clean" where no version is specified but this
@@ -119,7 +119,7 @@ public class LifecycleExecutorTest
     }
 
     @Test
-    public void testCalculationOfBuildPlanWithIndividualTaskOfTheCleanCleanGoal()
+    void testCalculationOfBuildPlanWithIndividualTaskOfTheCleanCleanGoal()
         throws Exception
     {
         // We are doing something like "mvn clean:clean" where no version is specified but this
@@ -242,7 +242,7 @@ public class LifecycleExecutorTest
     }
 
     @Test
-    public void testLifecycleQueryingUsingADefaultLifecyclePhase()
+    void testLifecycleQueryingUsingADefaultLifecyclePhase()
         throws Exception
     {
         File pom = getProject( "project-with-additional-lifecycle-elements" );
@@ -273,7 +273,7 @@ public class LifecycleExecutorTest
     }
 
     @Test
-    public void testLifecyclePluginsRetrievalForDefaultLifecycle()
+    void testLifecyclePluginsRetrievalForDefaultLifecycle()
         throws Exception
     {
         List<Plugin> plugins =
@@ -283,7 +283,7 @@ public class LifecycleExecutorTest
     }
 
     @Test
-    public void testPluginConfigurationCreation()
+    void testPluginConfigurationCreation()
         throws Exception
     {
         File pom = getProject( "project-with-additional-lifecycle-elements" );
@@ -313,7 +313,7 @@ public class LifecycleExecutorTest
     }
 
     @Test
-    public void testInvalidGoalName()
+    void testInvalidGoalName()
         throws Exception
     {
         File pom = getProject( "project-basic" );
@@ -333,7 +333,7 @@ public class LifecycleExecutorTest
 
 
     @Test
-    public void testPluginPrefixRetrieval()
+    void testPluginPrefixRetrieval()
         throws Exception
     {
         File pom = getProject( "project-basic" );
@@ -346,7 +346,7 @@ public class LifecycleExecutorTest
     // Prefixes
 
     @Test
-    public void testFindingPluginPrefixforCleanClean()
+    void testFindingPluginPrefixforCleanClean()
         throws Exception
     {
         File pom = getProject( "project-basic" );
@@ -356,7 +356,7 @@ public class LifecycleExecutorTest
     }
 
     @Test
-    public void testSetupMojoExecution()
+    void testSetupMojoExecution()
         throws Exception
     {
         File pom = getProject( "mojo-configuration" );
@@ -379,7 +379,7 @@ public class LifecycleExecutorTest
     }
 
     @Test
-    public void testExecutionListeners()
+    void testExecutionListeners()
         throws Exception
     {
         final File pom = getProject( "project-basic" );

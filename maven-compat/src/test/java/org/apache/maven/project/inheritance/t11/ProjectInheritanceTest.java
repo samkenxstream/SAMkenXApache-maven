@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * @author <a href="mailto:pschneider@gmail.com">Patrick Schneider</a>
  * @see <a href="https://issues.apache.org/jira/browse/MNG-2919">MNG-2919</a>
  */
-public class ProjectInheritanceTest
+class ProjectInheritanceTest
     extends AbstractProjectInheritanceTestCase
 {
     // ----------------------------------------------------------------------
@@ -49,7 +49,7 @@ public class ProjectInheritanceTest
     // ----------------------------------------------------------------------
 
     @Test
-    public void testDependencyManagementDoesNotOverrideScopeOfCurrentArtifact()
+    void testDependencyManagementDoesNotOverrideScopeOfCurrentArtifact()
         throws Exception
     {
         File localRepo = getLocalRepositoryPath();

@@ -25,11 +25,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class BuildListCalculatorTest
+class BuildListCalculatorTest
 {
 
     @Test
-    public void testCalculateProjectBuilds()
+    void testCalculateProjectBuilds()
         throws Exception
     {
         LifecycleTaskSegmentCalculator lifecycleTaskSegmentCalculator = getTaskSegmentCalculator();

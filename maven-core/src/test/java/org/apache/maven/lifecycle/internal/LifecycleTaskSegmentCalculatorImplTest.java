@@ -32,10 +32,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 /**
  * @author Kristian Rosenvold
  */
-public class LifecycleTaskSegmentCalculatorImplTest
+class LifecycleTaskSegmentCalculatorImplTest
 {
     @Test
-    public void testCalculateProjectBuilds()
+    void testCalculateProjectBuilds()
         throws Exception
     {
         LifecycleTaskSegmentCalculator lifecycleTaskSegmentCalculator = getTaskSegmentCalculator();

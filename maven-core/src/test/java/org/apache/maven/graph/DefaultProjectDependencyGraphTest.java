@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * @author Kristian Rosenvold
  */
-public class DefaultProjectDependencyGraphTest
+class DefaultProjectDependencyGraphTest
 {
 
     private final MavenProject aProject = createA();
@@ -47,7 +47,7 @@ public class DefaultProjectDependencyGraphTest
         createProject( Arrays.asList( toDependency( depender3 ) ), "depender5" );
 
     @Test
-    public void testGetSortedProjects()
+    void testGetSortedProjects()
         throws DuplicateProjectException, CycleDetectedException
     {
         ProjectDependencyGraph graph = new DefaultProjectDependencyGraph( Arrays.asList( depender1, aProject ) );
@@ -57,7 +57,7 @@ public class DefaultProjectDependencyGraphTest
     }
 
     @Test
-    public void testVerifyExpectedParentStructure()
+    void testVerifyExpectedParentStructure()
         throws CycleDetectedException, DuplicateProjectException
     {
         // This test verifies the baseline structure used in subsequent tests. If this fails, the rest will fail.
@@ -70,7 +70,7 @@ public class DefaultProjectDependencyGraphTest
     }
 
     @Test
-    public void testVerifyThatDownstreamProjectsComeInSortedOrder()
+    void testVerifyThatDownstreamProjectsComeInSortedOrder()
         throws CycleDetectedException, DuplicateProjectException
     {
         final List<MavenProject> downstreamProjects =
@@ -81,7 +81,7 @@ public class DefaultProjectDependencyGraphTest
     }
 
     @Test
-    public void testTransitivesInOrder()
+    void testTransitivesInOrder()
         throws CycleDetectedException, DuplicateProjectException
     {
         final ProjectDependencyGraph graph =
@@ -95,7 +95,7 @@ public class DefaultProjectDependencyGraphTest
     }
 
     @Test
-    public void testNonTransitivesInOrder()
+    void testNonTransitivesInOrder()
         throws CycleDetectedException, DuplicateProjectException
     {
         final ProjectDependencyGraph graph =
@@ -109,7 +109,7 @@ public class DefaultProjectDependencyGraphTest
     }
 
     @Test
-    public void testWithTransitiveOnly()
+    void testWithTransitiveOnly()
         throws CycleDetectedException, DuplicateProjectException
     {
         final ProjectDependencyGraph graph = new DefaultProjectDependencyGraph(
@@ -123,7 +123,7 @@ public class DefaultProjectDependencyGraphTest
     }
 
     @Test
-    public void testWithMissingTransitiveOnly()
+    void testWithMissingTransitiveOnly()
         throws CycleDetectedException, DuplicateProjectException
     {
         final ProjectDependencyGraph graph = new DefaultProjectDependencyGraph(
@@ -136,7 +136,7 @@ public class DefaultProjectDependencyGraphTest
     }
 
     @Test
-    public void testGetUpstreamProjects()
+    void testGetUpstreamProjects()
         throws CycleDetectedException, DuplicateProjectException
     {
         ProjectDependencyGraph graph = threeProjectsDependingOnASingle();

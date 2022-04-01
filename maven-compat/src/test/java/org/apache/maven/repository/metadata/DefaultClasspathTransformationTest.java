@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  *
  */
 @PlexusTest
-public class DefaultClasspathTransformationTest
+class DefaultClasspathTransformationTest
 {
     @Inject
     ClasspathTransformation transform;
@@ -43,8 +43,8 @@ public class DefaultClasspathTransformationTest
     MetadataGraphVertex v3;
     MetadataGraphVertex v4;
     //------------------------------------------------------------------------------------------
-	@BeforeEach
-    public void setUp() throws Exception
+	  @BeforeEach
+    void setUp() throws Exception
     {
         graph = new MetadataGraph( 4, 3 );
         /*
@@ -73,7 +73,7 @@ public class DefaultClasspathTransformationTest
     }
     //------------------------------------------------------------------------------------------
 	@Test
-    public void testCompileClasspathTransform()
+  void testCompileClasspathTransform()
     throws Exception
     {
         ClasspathContainer res;
@@ -86,7 +86,7 @@ public class DefaultClasspathTransformationTest
     }
     //------------------------------------------------------------------------------------------
 	@Test
-    public void testRuntimeClasspathTransform()
+  void testRuntimeClasspathTransform()
     throws Exception
     {
         ClasspathContainer res;
@@ -102,7 +102,7 @@ public class DefaultClasspathTransformationTest
     }
     //------------------------------------------------------------------------------------------
 	@Test
-    public void testTestClasspathTransform()
+  void testTestClasspathTransform()
     throws Exception
     {
         ClasspathContainer res;

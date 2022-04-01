@@ -42,7 +42,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
  */
-public class ProjectSorterTest
+class ProjectSorterTest
 {
     private Parent createParent( MavenProject project )
     {
@@ -106,7 +106,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testShouldNotFailWhenPluginDepReferencesCurrentProject()
+    void testShouldNotFailWhenPluginDepReferencesCurrentProject()
         throws Exception
     {
         MavenProject project = createProject( "group", "artifact", "1.0" );
@@ -125,7 +125,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testShouldNotFailWhenManagedPluginDepReferencesCurrentProject()
+    void testShouldNotFailWhenManagedPluginDepReferencesCurrentProject()
         throws Exception
     {
         MavenProject project = createProject( "group", "artifact", "1.0" );
@@ -148,7 +148,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testShouldNotFailWhenProjectReferencesNonExistentProject()
+    void testShouldNotFailWhenProjectReferencesNonExistentProject()
         throws Exception
     {
         MavenProject project = createProject( "group", "artifact", "1.0" );
@@ -163,7 +163,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testMatchingArtifactIdsDifferentGroupIds()
+    void testMatchingArtifactIdsDifferentGroupIds()
         throws Exception
     {
         List<MavenProject> projects = new ArrayList<>();
@@ -180,7 +180,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testMatchingGroupIdsDifferentArtifactIds()
+    void testMatchingGroupIdsDifferentArtifactIds()
         throws Exception
     {
         List<MavenProject> projects = new ArrayList<>();
@@ -197,7 +197,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testMatchingIdsAndVersions()
+    void testMatchingIdsAndVersions()
         throws Exception
     {
         List<MavenProject> projects = new ArrayList<>();
@@ -213,7 +213,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testMatchingIdsAndDifferentVersions()
+    void testMatchingIdsAndDifferentVersions()
         throws Exception
     {
         List<MavenProject> projects = new ArrayList<>();
@@ -228,7 +228,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testPluginDependenciesInfluenceSorting()
+    void testPluginDependenciesInfluenceSorting()
         throws Exception
     {
         List<MavenProject> projects = new ArrayList<>();
@@ -272,7 +272,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testPluginDependenciesInfluenceSorting_DeclarationInParent()
+    void testPluginDependenciesInfluenceSorting_DeclarationInParent()
         throws Exception
     {
         List<MavenProject> projects = new ArrayList<>();
@@ -308,7 +308,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testPluginVersionsAreConsidered()
+    void testPluginVersionsAreConsidered()
         throws Exception
     {
         List<MavenProject> projects = new ArrayList<>();
@@ -328,7 +328,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testDependencyPrecedesProjectThatUsesSpecificDependencyVersion()
+    void testDependencyPrecedesProjectThatUsesSpecificDependencyVersion()
         throws Exception
     {
         List<MavenProject> projects = new ArrayList<>();
@@ -347,7 +347,7 @@ public class ProjectSorterTest
     }
 
     @Test
-    public void testDependencyPrecedesProjectThatUsesUnresolvedDependencyVersion()
+    void testDependencyPrecedesProjectThatUsesUnresolvedDependencyVersion()
         throws Exception
     {
         List<MavenProject> projects = new ArrayList<>();

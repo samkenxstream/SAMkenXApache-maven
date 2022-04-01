@@ -34,12 +34,12 @@ import static org.mockito.Mockito.verify;
 /**
  * @author Kristian Rosenvold
  */
-public class BuilderCommonTest
+class BuilderCommonTest
 {
     private Logger logger = mock( Logger.class );
 
     @Test
-    public void testResolveBuildPlan()
+    void testResolveBuildPlan()
         throws Exception
     {
         MavenSession original = ProjectDependencyGraphStub.getMavenSession();
@@ -56,7 +56,7 @@ public class BuilderCommonTest
     }
 
     @Test
-    public void testDefaultBindingPluginsWarning()
+    void testDefaultBindingPluginsWarning()
         throws Exception
     {
         MavenSession original = ProjectDependencyGraphStub.getMavenSession();
@@ -80,19 +80,19 @@ public class BuilderCommonTest
     }
 
     @Test
-    public void testHandleBuildError()
+    void testHandleBuildError()
         throws Exception
     {
     }
 
     @Test
-    public void testAttachToThread()
+    void testAttachToThread()
         throws Exception
     {
     }
 
     @Test
-    public void testGetKey()
+    void testGetKey()
         throws Exception
     {
     }

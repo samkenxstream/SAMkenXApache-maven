@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author <a href="mailto:pschneider@gmail.com">Patrick Schneider</a>
  */
-public class ProjectInheritanceTest
+class ProjectInheritanceTest
     extends AbstractProjectInheritanceTestCase
 {
     // ----------------------------------------------------------------------
@@ -57,7 +57,7 @@ public class ProjectInheritanceTest
     // ----------------------------------------------------------------------
 
     @Test
-    public void testDependencyManagementOverridesTransitiveDependencyVersion()
+    void testDependencyManagementOverridesTransitiveDependencyVersion()
         throws Exception
     {
         File localRepo = getLocalRepositoryPath();

@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DefaultUpdateCheckManagerTest
+class DefaultUpdateCheckManagerTest
     extends AbstractArtifactComponentTestCase
 {
 
@@ -56,7 +56,6 @@ public class DefaultUpdateCheckManagerTest
     }
 
     @BeforeEach
-    @Override
     public void setUp()
         throws Exception
     {
@@ -66,7 +65,7 @@ public class DefaultUpdateCheckManagerTest
     }
 
     @Test
-    public void testArtifact() throws Exception
+    void testArtifact() throws Exception
     {
         ArtifactRepository remoteRepository = remoteRepository();
 
@@ -96,7 +95,7 @@ public class DefaultUpdateCheckManagerTest
     }
 
     @Test
-    public void testMissingArtifact()
+    void testMissingArtifact()
         throws Exception
     {
         ArtifactRepository remoteRepository = remoteRepository();
@@ -124,7 +123,7 @@ public class DefaultUpdateCheckManagerTest
     }
 
     @Test
-    public void testPom() throws Exception
+    void testPom() throws Exception
     {
         ArtifactRepository remoteRepository = remoteRepository();
 
@@ -154,7 +153,7 @@ public class DefaultUpdateCheckManagerTest
     }
 
     @Test
-    public void testMissingPom()
+    void testMissingPom()
         throws Exception
     {
         ArtifactRepository remoteRepository = remoteRepository();
@@ -182,7 +181,7 @@ public class DefaultUpdateCheckManagerTest
     }
 
     @Test
-    public void testMetadata() throws Exception
+    void testMetadata() throws Exception
     {
         ArtifactRepository remoteRepository = remoteRepository();
 
@@ -210,7 +209,7 @@ public class DefaultUpdateCheckManagerTest
     }
 
     @Test
-    public void testMissingMetadata() throws Exception
+    void testMissingMetadata() throws Exception
     {
         ArtifactRepository remoteRepository = remoteRepository();
 
@@ -236,7 +235,7 @@ public class DefaultUpdateCheckManagerTest
     }
 
     @Test
-    public void testArtifactTouchFileName() throws Exception
+    void testArtifactTouchFileName() throws Exception
     {
         ArtifactRepository localRepository = localRepository();
 

@@ -39,20 +39,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @author Benjamin Bentmann
  */
-public class ExtensionDescriptorBuilderTest
+class ExtensionDescriptorBuilderTest
 {
 
     private ExtensionDescriptorBuilder builder;
 
     @BeforeEach
-    public void setUp()
+    void setUp()
         throws Exception
     {
         builder = new ExtensionDescriptorBuilder();
     }
 
     @AfterEach
-    public void tearDown()
+    void tearDown()
         throws Exception
     {
         builder = null;
@@ -64,7 +64,7 @@ public class ExtensionDescriptorBuilderTest
     }
 
     @Test
-    public void testEmptyDescriptor()
+    void testEmptyDescriptor()
         throws Exception
     {
         String xml = "<extension></extension>";
@@ -79,7 +79,7 @@ public class ExtensionDescriptorBuilderTest
     }
 
     @Test
-    public void testCompleteDescriptor()
+    void testCompleteDescriptor()
         throws Exception
     {
         String xml =

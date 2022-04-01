@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * Verifies that plugin execution sections in the parent POM that have
  * inherit == false are not inherited to the child POM.
  */
-public class ProjectInheritanceTest extends AbstractProjectInheritanceTestCase
+class ProjectInheritanceTest extends AbstractProjectInheritanceTestCase
 {
     // ----------------------------------------------------------------------
     //
@@ -48,7 +48,7 @@ public class ProjectInheritanceTest extends AbstractProjectInheritanceTestCase
     // ----------------------------------------------------------------------
 
     @Test
-    public void testFalsePluginExecutionInheritValue() throws Exception
+    void testFalsePluginExecutionInheritValue() throws Exception
     {
         File localRepo = getLocalRepositoryPath();
 

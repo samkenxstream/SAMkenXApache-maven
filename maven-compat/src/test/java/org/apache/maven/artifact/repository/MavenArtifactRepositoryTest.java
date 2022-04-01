@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MavenArtifactRepositoryTest
+class MavenArtifactRepositoryTest
 {
     private static class MavenArtifactRepositorySubclass extends MavenArtifactRepository
     {
@@ -44,7 +44,7 @@ public class MavenArtifactRepositoryTest
     }
 
     @Test
-    public void testHashCodeEquals()
+    void testHashCodeEquals()
     {
         MavenArtifactRepositorySubclass r1 = new MavenArtifactRepositorySubclass( "foo" );
         MavenArtifactRepositorySubclass r2 = new MavenArtifactRepositorySubclass( "foo" );

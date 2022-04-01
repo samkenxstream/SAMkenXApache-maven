@@ -29,12 +29,12 @@ import org.apache.maven.model.building.TransformerContext;
 import org.junit.jupiter.api.Test;
 import org.xmlunit.assertj.XmlAssert;
 
-public class ConsumerModelSourceTransformerTest
+class ConsumerModelSourceTransformerTest
 {
     private ConsumerModelSourceTransformer transformer = new ConsumerModelSourceTransformer();
 
     @Test
-    public void transform() throws Exception
+    void transform() throws Exception
     {
         Path beforePomFile = Paths.get( "src/test/resources/projects/transform/before.pom").toAbsolutePath();
         Path afterPomFile = Paths.get( "src/test/resources/projects/transform/after.pom").toAbsolutePath();

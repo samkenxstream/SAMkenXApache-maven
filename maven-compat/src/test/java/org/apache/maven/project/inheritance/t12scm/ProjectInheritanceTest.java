@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *
  * @author jdcasey
  */
-public class ProjectInheritanceTest
+class ProjectInheritanceTest
     extends AbstractProjectInheritanceTestCase
 {
     // ----------------------------------------------------------------------
@@ -47,7 +47,7 @@ public class ProjectInheritanceTest
     // ----------------------------------------------------------------------
 
     @Test
-    public void testScmInfoCalculatedCorrectlyOnParentAndChildRead()
+    void testScmInfoCalculatedCorrectlyOnParentAndChildRead()
         throws Exception
     {
         File localRepo = getLocalRepositoryPath();
@@ -81,7 +81,7 @@ public class ProjectInheritanceTest
     }
 
     @Test
-    public void testScmInfoCalculatedCorrectlyOnChildOnlyRead()
+    void testScmInfoCalculatedCorrectlyOnChildOnlyRead()
         throws Exception
     {
         File localRepo = getLocalRepositoryPath();

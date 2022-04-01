@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @PlexusTest
-public class DefaultProfileManagerTest
+class DefaultProfileManagerTest
 {
 
     @Inject
@@ -49,7 +49,7 @@ public class DefaultProfileManagerTest
     }
 
     @Test
-    public void testShouldActivateDefaultProfile()
+    void testShouldActivateDefaultProfile()
         throws Exception
     {
         Profile notActivated = new Profile();
@@ -85,7 +85,7 @@ public class DefaultProfileManagerTest
     }
 
     @Test
-    public void testShouldNotActivateDefaultProfile()
+    void testShouldNotActivateDefaultProfile()
         throws Exception
     {
         Profile syspropActivated = new Profile();
@@ -125,7 +125,7 @@ public class DefaultProfileManagerTest
 
 
     @Test
-    public void testShouldNotActivateReversalOfPresentSystemProperty()
+    void testShouldNotActivateReversalOfPresentSystemProperty()
         throws Exception
     {
         Profile syspropActivated = new Profile();
@@ -153,7 +153,7 @@ public class DefaultProfileManagerTest
     }
 
     @Test
-    public void testShouldOverrideAndActivateInactiveProfile()
+    void testShouldOverrideAndActivateInactiveProfile()
         throws Exception
     {
         Profile syspropActivated = new Profile();
@@ -184,7 +184,7 @@ public class DefaultProfileManagerTest
     }
 
     @Test
-    public void testShouldOverrideAndDeactivateActiveProfile()
+    void testShouldOverrideAndDeactivateActiveProfile()
         throws Exception
     {
         Profile syspropActivated = new Profile();
@@ -215,7 +215,7 @@ public class DefaultProfileManagerTest
 
     @Test
     @Disabled
-    public void testOsActivationProfile()
+    void testOsActivationProfile()
         throws Exception
     {
         /*

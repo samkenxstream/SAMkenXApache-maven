@@ -29,11 +29,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class UrlSourceTest
+class UrlSourceTest
 {
 
     @Test
-    public void testUrlSource()
+    void testUrlSource()
     {
         NullPointerException e = assertThrows(
                 NullPointerException.class,
@@ -43,7 +43,7 @@ public class UrlSourceTest
     }
 
     @Test
-    public void testGetInputStream()
+    void testGetInputStream()
         throws Exception
     {
         URL txtFile = new File( "target/test-classes/source.txt" ).toURI().toURL();
@@ -56,7 +56,7 @@ public class UrlSourceTest
     }
 
     @Test
-    public void testGetLocation()
+    void testGetLocation()
         throws Exception
     {
         URL txtFile = new File( "target/test-classes/source.txt" ).toURI().toURL();

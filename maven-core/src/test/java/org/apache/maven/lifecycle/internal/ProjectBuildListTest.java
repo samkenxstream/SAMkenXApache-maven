@@ -27,10 +27,10 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Kristian Rosenvold
  */
-public class ProjectBuildListTest
+class ProjectBuildListTest
 {
     @Test
-    public void testGetByTaskSegment()
+    void testGetByTaskSegment()
         throws Exception
     {
         final MavenSession session = ProjectDependencyGraphStub.getMavenSession();

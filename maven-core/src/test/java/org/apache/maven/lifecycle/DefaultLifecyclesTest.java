@@ -35,13 +35,13 @@ import static org.hamcrest.Matchers.is;
  * @author Kristian Rosenvold
  */
 @PlexusTest
-public class DefaultLifecyclesTest
+class DefaultLifecyclesTest
 {
     @Inject
     private DefaultLifecycles defaultLifeCycles;
 
     @Test
-    public void testDefaultLifecycles()
+    void testDefaultLifecycles()
     {
         final List<Lifecycle> lifecycles = defaultLifeCycles.getLifeCycles();
         assertThat( lifecycles, hasSize( 4 ) );
@@ -49,7 +49,7 @@ public class DefaultLifecyclesTest
     }
 
     @Test
-    public void testDefaultLifecycle()
+    void testDefaultLifecycle()
     {
         final Lifecycle lifecycle = getLifeCycleById( "default" );
         assertThat( lifecycle.getId(), is( "default" )  );
@@ -57,7 +57,7 @@ public class DefaultLifecyclesTest
     }
 
     @Test
-    public void testCleanLifecycle()
+    void testCleanLifecycle()
     {
         final Lifecycle lifecycle = getLifeCycleById( "clean" );
         assertThat( lifecycle.getId(), is( "clean" )  );
@@ -65,7 +65,7 @@ public class DefaultLifecyclesTest
     }
 
     @Test
-    public void testSiteLifecycle()
+    void testSiteLifecycle()
     {
         final Lifecycle lifecycle = getLifeCycleById( "site" );
         assertThat( lifecycle.getId(), is( "site" )  );
@@ -73,7 +73,7 @@ public class DefaultLifecyclesTest
     }
 
     @Test
-    public void testWrapperLifecycle()
+    void testWrapperLifecycle()
     {
         final Lifecycle lifecycle = getLifeCycleById( "wrapper" );
         assertThat( lifecycle.getId(), is( "wrapper" )  );
@@ -81,7 +81,7 @@ public class DefaultLifecyclesTest
     }
 
     @Test
-    public void testCustomLifecycle()
+    void testCustomLifecycle()
     {
         List<Lifecycle> myLifecycles = new ArrayList<>();
         Lifecycle myLifecycle = new Lifecycle( "etl",

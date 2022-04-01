@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.inject.Inject;
 
-public class DefaultArtifactResolverTest
+class DefaultArtifactResolverTest
     extends AbstractArtifactComponentTestCase
 {
     @Inject
@@ -55,7 +55,7 @@ public class DefaultArtifactResolverTest
     }
 
     @Test
-    public void testMNG4738()
+    void testMNG4738()
         throws Exception
     {
         Artifact g = createLocalArtifact( "g", "1.0" );
@@ -101,7 +101,7 @@ public class DefaultArtifactResolverTest
     }
 
     @Test
-    public void testLookup()
+    void testLookup()
         throws Exception
     {
         ArtifactResolver resolver = getContainer().lookup( ArtifactResolver.class, "default" );

@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * @author Kristian Rosenvold
  */
 
-public class LifecycleExecutorSubModulesTest
+class LifecycleExecutorSubModulesTest
     extends AbstractCoreMavenComponentTestCase
 {
     @Inject
@@ -69,7 +69,7 @@ public class LifecycleExecutorSubModulesTest
     }
 
     @Test
-    public void testCreation()
+    void testCreation()
         throws Exception
     {
         assertNotNull( defaultLifeCycles );

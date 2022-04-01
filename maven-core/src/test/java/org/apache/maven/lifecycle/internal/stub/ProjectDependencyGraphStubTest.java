@@ -29,19 +29,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author Kristian Rosenvold
  */
 
-public class ProjectDependencyGraphStubTest
+class ProjectDependencyGraphStubTest
 {
     ProjectDependencyGraphStub stub = new ProjectDependencyGraphStub();
 
     @Test
-    public void testADependencies()
+    void testADependencies()
     {
         final List<MavenProject> mavenProjects = stub.getUpstreamProjects( ProjectDependencyGraphStub.A, false );
         assertEquals( 0, mavenProjects.size() );
     }
 
     @Test
-    public void testBDepenencies()
+    void testBDepenencies()
     {
         final List<MavenProject> bProjects = stub.getUpstreamProjects( ProjectDependencyGraphStub.B, false );
         assertEquals( 1, bProjects.size() );
@@ -49,7 +49,7 @@ public class ProjectDependencyGraphStubTest
     }
 
     @Test
-    public void testCDepenencies()
+    void testCDepenencies()
     {
         final List<MavenProject> cProjects = stub.getUpstreamProjects( ProjectDependencyGraphStub.C, false );
         assertEquals( 1, cProjects.size() );
@@ -57,7 +57,7 @@ public class ProjectDependencyGraphStubTest
     }
 
     @Test
-    public void testXDepenencies()
+    void testXDepenencies()
     {
         final List<MavenProject> cProjects = stub.getUpstreamProjects( ProjectDependencyGraphStub.X, false );
         assertEquals( 2, cProjects.size() );

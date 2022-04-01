@@ -58,7 +58,7 @@ public class ThreadOutputMuxerTest
     final String full = "Full";
 
     @Test
-    public void testSingleThreaded()
+    void testSingleThreaded()
         throws Exception
     {
         ProjectBuildList src = getProjectBuildList();
@@ -87,7 +87,7 @@ public class ThreadOutputMuxerTest
     }
 
     @Test
-    public void testMultiThreaded()
+    void testMultiThreaded()
         throws Exception
     {
         ProjectBuildList projectBuildList = getProjectBuildList();
