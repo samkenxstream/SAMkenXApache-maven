@@ -32,14 +32,14 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
-public class FileToRawModelMergerTest
+class FileToRawModelMergerTest
 {
 
     /**
      * Ensures that all list-merge methods are overridden
      */
     @Test
-    public void testOverriddenMergeMethods()
+    void testOverriddenMergeMethods()
     {
         List<String> methodNames =
             Stream.of( ModelMerger.class.getDeclaredMethods() )

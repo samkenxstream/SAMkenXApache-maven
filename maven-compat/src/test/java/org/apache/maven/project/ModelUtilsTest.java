@@ -206,7 +206,7 @@ class ModelUtilsTest
     }
 
     @Test
-    public void testShouldMergeInheritedPluginHavingExecutionWithLocalPlugin()
+    void testShouldMergeInheritedPluginHavingExecutionWithLocalPlugin()
     {
         Plugin parent = new Plugin();
         parent.setArtifactId( "testArtifact" );

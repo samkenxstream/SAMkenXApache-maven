@@ -43,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * @author Hervé Boutemy
  */
-public class DefaultInheritanceAssemblerTest
+class DefaultInheritanceAssemblerTest
 {
     private DefaultModelReader reader;
 
@@ -52,7 +52,7 @@ public class DefaultInheritanceAssemblerTest
     private InheritanceAssembler assembler;
 
     @BeforeEach
-    public void setUp()
+    void setUp()
         throws Exception
     {
         reader = new DefaultModelReader( new AbstractModelSourceTransformer()
@@ -80,7 +80,7 @@ public class DefaultInheritanceAssemblerTest
     }
 
     @Test
-    public void testPluginConfiguration()
+    void testPluginConfiguration()
         throws Exception
     {
         testInheritance( "plugin-configuration" );
@@ -92,7 +92,7 @@ public class DefaultInheritanceAssemblerTest
      * @throws IOException Model read problem
      */
     @Test
-    public void testUrls()
+    void testUrls()
         throws Exception
     {
         testInheritance( "urls" );
@@ -103,7 +103,7 @@ public class DefaultInheritanceAssemblerTest
      * @throws IOException Model read problem
      */
     @Test
-    public void testFlatUrls()
+    void testFlatUrls()
         throws IOException
     {
         testInheritance( "flat-urls" );
@@ -114,7 +114,7 @@ public class DefaultInheritanceAssemblerTest
      * @throws Exception
      */
     @Test
-    public void testNoAppendUrls()
+    void testNoAppendUrls()
         throws Exception
     {
         testInheritance( "no-append-urls" );
@@ -125,7 +125,7 @@ public class DefaultInheritanceAssemblerTest
      * @throws Exception
      */
     @Test
-    public void testNoAppendUrls2()
+    void testNoAppendUrls2()
         throws Exception
     {
         testInheritance( "no-append-urls2" );
@@ -136,7 +136,7 @@ public class DefaultInheritanceAssemblerTest
      * @throws Exception
      */
     @Test
-    public void testNoAppendUrls3()
+    void testNoAppendUrls3()
         throws Exception
     {
         testInheritance( "no-append-urls3" );
@@ -149,7 +149,7 @@ public class DefaultInheritanceAssemblerTest
      * @throws IOException Model read problem
      */
     @Test
-    public void testFlatTrickyUrls()
+    void testFlatTrickyUrls()
         throws IOException
     {
         // parent references child with artifactId (which is not directory name)
@@ -187,7 +187,7 @@ public class DefaultInheritanceAssemblerTest
     }
 
     @Test
-    public void testWithEmptyUrl()
+    void testWithEmptyUrl()
         throws IOException
     {
             testInheritance( "empty-urls", false );
@@ -231,7 +231,7 @@ public class DefaultInheritanceAssemblerTest
     }
 
     @Test
-    public void testModulePathNotArtifactId()
+    void testModulePathNotArtifactId()
         throws IOException
     {
         Model parent = getModel( "module-path-not-artifactId-parent" );

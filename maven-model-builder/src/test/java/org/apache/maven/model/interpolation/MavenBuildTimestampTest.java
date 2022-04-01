@@ -26,10 +26,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MavenBuildTimestampTest
+class MavenBuildTimestampTest
 {
     @Test
-    public void testMavenBuildTimestampUsesUTC()
+    void testMavenBuildTimestampUsesUTC()
     {
         Properties interpolationProperties = new Properties();
         interpolationProperties.setProperty( "maven.build.timestamp.format", "yyyyMMdd'T'HHmm'Z'" );

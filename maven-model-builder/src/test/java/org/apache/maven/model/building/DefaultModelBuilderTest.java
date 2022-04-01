@@ -36,7 +36,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Guillaume Nodet
  */
-public class DefaultModelBuilderTest
+class DefaultModelBuilderTest
 {
 
     private static final String BASE1_ID = "thegroup:base1:pom";
@@ -82,7 +82,7 @@ public class DefaultModelBuilderTest
             "</project>\n";
 
     @Test
-    public void testCycleInImports()
+    void testCycleInImports()
             throws Exception
     {
         ModelBuilder builder = new DefaultModelBuilderFactory().newInstance();
@@ -148,7 +148,7 @@ public class DefaultModelBuilderTest
     }
 
     @Test
-    public void testBuildRawModel()
+    void testBuildRawModel()
             throws Exception
     {
         ModelBuilder builder = new DefaultModelBuilderFactory().newInstance();

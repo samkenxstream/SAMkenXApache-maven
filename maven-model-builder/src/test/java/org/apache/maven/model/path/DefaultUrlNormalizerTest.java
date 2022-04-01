@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 /**
  * @author Benjamin Bentmann
  */
-public class DefaultUrlNormalizerTest
+class DefaultUrlNormalizerTest
 {
 
     private UrlNormalizer normalizer = new DefaultUrlNormalizer();
@@ -38,13 +38,13 @@ public class DefaultUrlNormalizerTest
     }
 
     @Test
-    public void testNullSafe()
+    void testNullSafe()
     {
         assertNull( normalize( null ) );
     }
 
     @Test
-    public void testTrailingSlash()
+    void testTrailingSlash()
     {
         assertEquals( "", normalize( "" ) );
         assertEquals( "http://server.org/dir", normalize( "http://server.org/dir" ) );
@@ -52,7 +52,7 @@ public class DefaultUrlNormalizerTest
     }
 
     @Test
-    public void testRemovalOfParentRefs()
+    void testRemovalOfParentRefs()
     {
         assertEquals( "http://server.org/child", normalize( "http://server.org/parent/../child" ) );
         assertEquals( "http://server.org/child", normalize( "http://server.org/grand/parent/../../child" ) );
@@ -62,7 +62,7 @@ public class DefaultUrlNormalizerTest
     }
 
     @Test
-    public void testPreservationOfDoubleSlashes()
+    void testPreservationOfDoubleSlashes()
     {
         assertEquals( "scm:hg:ssh://localhost//home/user", normalize( "scm:hg:ssh://localhost//home/user" ) );
         assertEquals( "file:////UNC/server", normalize( "file:////UNC/server" ) );
@@ -71,19 +71,19 @@ public class DefaultUrlNormalizerTest
     }
 
     @Test
-    public void absolutePathTraversalPastRootIsOmitted()
+    void absolutePathTraversalPastRootIsOmitted()
     {
         assertEquals( "/", normalize("/../" ) );
     }
 
     @Test
-    public void parentDirectoryRemovedFromRelativeUriReference()
+    void parentDirectoryRemovedFromRelativeUriReference()
     {
         assertEquals( "", normalize( "a/../" ) );
     }
 
     @Test
-    public void leadingParentDirectoryNotRemovedFromRelativeUriReference()
+    void leadingParentDirectoryNotRemovedFromRelativeUriReference()
     {
         assertEquals( "../", normalize( "../" ) );
     }

@@ -32,12 +32,11 @@ import org.junit.jupiter.api.Test;
  *
  * @author Benjamin Bentmann
  */
-public class PropertyProfileActivatorTest
+class PropertyProfileActivatorTest
     extends AbstractProfileActivatorTest<PropertyProfileActivator>
 {
 
     @BeforeEach
-    @Override
     void setUp() throws Exception
     {
         activator = new PropertyProfileActivator();
@@ -66,7 +65,7 @@ public class PropertyProfileActivatorTest
     }
 
     @Test
-    public void testNullSafe()
+    void testNullSafe()
         throws Exception
     {
         Profile p = new Profile();
@@ -79,7 +78,7 @@ public class PropertyProfileActivatorTest
     }
 
     @Test
-    public void testWithNameOnly_UserProperty()
+    void testWithNameOnly_UserProperty()
         throws Exception
     {
         Profile profile = newProfile( "prop", null );
@@ -92,7 +91,7 @@ public class PropertyProfileActivatorTest
     }
 
     @Test
-    public void testWithNameOnly_SystemProperty()
+    void testWithNameOnly_SystemProperty()
         throws Exception
     {
         Profile profile = newProfile( "prop", null );
@@ -105,7 +104,7 @@ public class PropertyProfileActivatorTest
     }
 
     @Test
-    public void testWithNegatedNameOnly_UserProperty()
+    void testWithNegatedNameOnly_UserProperty()
         throws Exception
     {
         Profile profile = newProfile( "!prop", null );
@@ -118,7 +117,7 @@ public class PropertyProfileActivatorTest
     }
 
     @Test
-    public void testWithNegatedNameOnly_SystemProperty()
+    void testWithNegatedNameOnly_SystemProperty()
         throws Exception
     {
         Profile profile = newProfile( "!prop", null );
@@ -131,7 +130,7 @@ public class PropertyProfileActivatorTest
     }
 
     @Test
-    public void testWithValue_UserProperty()
+    void testWithValue_UserProperty()
         throws Exception
     {
         Profile profile = newProfile( "prop", "value" );
@@ -144,7 +143,7 @@ public class PropertyProfileActivatorTest
     }
 
     @Test
-    public void testWithValue_SystemProperty()
+    void testWithValue_SystemProperty()
         throws Exception
     {
         Profile profile = newProfile( "prop", "value" );
@@ -157,7 +156,7 @@ public class PropertyProfileActivatorTest
     }
 
     @Test
-    public void testWithNegatedValue_UserProperty()
+    void testWithNegatedValue_UserProperty()
         throws Exception
     {
         Profile profile = newProfile( "prop", "!value" );
@@ -170,7 +169,7 @@ public class PropertyProfileActivatorTest
     }
 
     @Test
-    public void testWithNegatedValue_SystemProperty()
+    void testWithNegatedValue_SystemProperty()
         throws Exception
     {
         Profile profile = newProfile( "prop", "!value" );
@@ -183,7 +182,7 @@ public class PropertyProfileActivatorTest
     }
 
     @Test
-    public void testWithValue_UserPropertyDominantOverSystemProperty()
+    void testWithValue_UserPropertyDominantOverSystemProperty()
         throws Exception
     {
         Profile profile = newProfile( "prop", "value" );

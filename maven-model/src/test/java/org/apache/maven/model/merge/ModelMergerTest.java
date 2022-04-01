@@ -53,7 +53,7 @@ public class ModelMergerTest
     private ModelMerger modelMerger = new ModelMerger();
 
     @Test
-    public void mergeArtifactId()
+    void mergeArtifactId()
     {
         Model target = new Model();
         target.setArtifactId( "TARGET" );
@@ -70,7 +70,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameContributors()
+    void mergeSameContributors()
     {
         Contributor contributor = new Contributor();
         contributor.setEmail( "contributor@maven.apache.org" );
@@ -87,7 +87,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameDependencies()
+    void mergeSameDependencies()
     {
         Dependency dependency = new Dependency();
         dependency.setGroupId( "groupId" );
@@ -106,7 +106,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeDescription()
+    void mergeDescription()
     {
         Model target = new Model();
         target.setDescription( "TARGET" );
@@ -123,7 +123,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameDevelopers()
+    void mergeSameDevelopers()
     {
         Developer developer = new Developer();
         developer.setId( "devid" );
@@ -140,7 +140,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameExcludes()
+    void mergeSameExcludes()
     {
         PatternSet target = new PatternSet();
         target.setExcludes( Arrays.asList( "first", "second", "third" ) );
@@ -153,7 +153,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameFilters()
+    void mergeSameFilters()
     {
         Build target = new Build();
         target.setFilters( Arrays.asList( "first", "second", "third" ) );
@@ -166,7 +166,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameGoals()
+    void mergeSameGoals()
     {
         PluginExecution target = new PluginExecution();
         target.setGoals( Arrays.asList( "first", "second", "third" ) );
@@ -179,7 +179,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeGroupId()
+    void mergeGroupId()
     {
         Model target = new Model();
         target.setGroupId( "TARGET" );
@@ -196,7 +196,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeInceptionYear()
+    void mergeInceptionYear()
     {
         Model target = new Model();
         target.setInceptionYear( "TARGET" );
@@ -213,7 +213,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameIncludes()
+    void mergeSameIncludes()
     {
         PatternSet target = new PatternSet();
         target.setIncludes( Arrays.asList( "first", "second", "third" ) );
@@ -226,7 +226,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameMailingLists()
+    void mergeSameMailingLists()
     {
         MailingList mailingList = new MailingList();
         mailingList.setName( "name" );
@@ -243,7 +243,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeModelVersion()
+    void mergeModelVersion()
     {
         Model target = new Model();
         target.setModelVersion( "TARGET" );
@@ -260,7 +260,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameModules()
+    void mergeSameModules()
     {
         Model target = new Model();
         target.setModules( Arrays.asList( "first", "second", "third" ) );
@@ -273,7 +273,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeName()
+    void mergeName()
     {
         Model target = new Model();
         target.setName( "TARGET" );
@@ -290,7 +290,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameOtherArchives()
+    void mergeSameOtherArchives()
     {
         MailingList target = new MailingList();
         target.setOtherArchives( Arrays.asList( "first", "second", "third" ) );
@@ -303,7 +303,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergePackaging()
+    void mergePackaging()
     {
         Model target = new Model();
         target.setPackaging( "TARGET" );
@@ -320,7 +320,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSamePluginRepositories()
+    void mergeSamePluginRepositories()
     {
         Repository repository = new Repository();
         repository.setId( "repository" );
@@ -337,7 +337,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameProfiles()
+    void mergeSameProfiles()
     {
         Profile profile = new Profile();
         profile.setId( "profile" );
@@ -354,7 +354,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameReports()
+    void mergeSameReports()
     {
         ReportSet target = new ReportSet();
         target.setReports( Arrays.asList( "first", "second", "third" ) );
@@ -367,7 +367,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameRepositories()
+    void mergeSameRepositories()
     {
         Repository repository = new Repository();
         repository.setId( "repository" );
@@ -384,7 +384,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeSameRoles()
+    void mergeSameRoles()
     {
         Contributor target = new Contributor();
         target.setRoles( Arrays.asList( "first", "second", "third" ) );
@@ -397,7 +397,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeUrl()
+    void mergeUrl()
     {
         Model target = new Model();
         target.setUrl( "TARGET" );;
@@ -414,7 +414,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void mergeVersion()
+    void mergeVersion()
     {
         Model target = new Model();
         target.setVersion( "TARGET" );;
@@ -431,7 +431,7 @@ public class ModelMergerTest
     }
 
     @Test
-    public void testMergedModelSerialization() throws Exception {
+    void testMergedModelSerialization() throws Exception {
         Model target = new Model();
         Model source = new Model();
         target.setLicenses(new ArrayList<License>());

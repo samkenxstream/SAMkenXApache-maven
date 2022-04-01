@@ -31,11 +31,10 @@ import org.junit.jupiter.api.Test;
  *
  * @author Benjamin Bentmann
  */
-public class JdkVersionProfileActivatorTest
+class JdkVersionProfileActivatorTest
     extends AbstractProfileActivatorTest<JdkVersionProfileActivator>
 {
 
-    @Override
     @BeforeEach
     void setUp() throws Exception
     {
@@ -61,7 +60,7 @@ public class JdkVersionProfileActivatorTest
     }
 
     @Test
-    public void testNullSafe()
+    void testNullSafe()
         throws Exception
     {
         Profile p = new Profile();
@@ -74,7 +73,7 @@ public class JdkVersionProfileActivatorTest
     }
 
     @Test
-    public void testPrefix()
+    void testPrefix()
         throws Exception
     {
         Profile profile = newProfile( "1.4" );
@@ -90,7 +89,7 @@ public class JdkVersionProfileActivatorTest
     }
 
     @Test
-    public void testPrefixNegated()
+    void testPrefixNegated()
         throws Exception
     {
         Profile profile = newProfile( "!1.4" );
@@ -106,7 +105,7 @@ public class JdkVersionProfileActivatorTest
     }
 
     @Test
-    public void testVersionRangeInclusiveBounds()
+    void testVersionRangeInclusiveBounds()
         throws Exception
     {
         Profile profile = newProfile( "[1.5,1.6]" );
@@ -129,7 +128,7 @@ public class JdkVersionProfileActivatorTest
     }
 
     @Test
-    public void testVersionRangeExclusiveBounds()
+    void testVersionRangeExclusiveBounds()
         throws Exception
     {
         Profile profile = newProfile( "(1.3,1.6)" );
@@ -153,7 +152,7 @@ public class JdkVersionProfileActivatorTest
     }
 
     @Test
-    public void testVersionRangeInclusiveLowerBound()
+    void testVersionRangeInclusiveLowerBound()
         throws Exception
     {
         Profile profile = newProfile( "[1.5,)" );
@@ -176,7 +175,7 @@ public class JdkVersionProfileActivatorTest
     }
 
     @Test
-    public void testVersionRangeExclusiveUpperBound()
+    void testVersionRangeExclusiveUpperBound()
         throws Exception
     {
         Profile profile = newProfile( "(,1.6)" );
