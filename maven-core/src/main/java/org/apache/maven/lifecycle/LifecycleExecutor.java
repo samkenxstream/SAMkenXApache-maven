@@ -24,6 +24,7 @@ import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.InvalidPluginDescriptorException;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoNotFoundException;
+import org.apache.maven.plugin.PluginConfigurationException;
 import org.apache.maven.plugin.PluginDescriptorParsingException;
 import org.apache.maven.plugin.PluginManagerException;
 import org.apache.maven.plugin.PluginNotFoundException;
@@ -67,13 +68,13 @@ public interface LifecycleExecutor
         throws PluginNotFoundException, PluginResolutionException, PluginDescriptorParsingException,
         MojoNotFoundException, NoPluginFoundForPrefixException, InvalidPluginDescriptorException,
         PluginManagerException, LifecyclePhaseNotFoundException, LifecycleNotFoundException,
-        PluginVersionResolutionException;
+        PluginVersionResolutionException, PluginConfigurationException;
 
     MavenExecutionPlan calculateExecutionPlan( MavenSession session, boolean setup, String... tasks )
         throws PluginNotFoundException, PluginResolutionException, PluginDescriptorParsingException,
         MojoNotFoundException, NoPluginFoundForPrefixException, InvalidPluginDescriptorException,
         PluginManagerException, LifecyclePhaseNotFoundException, LifecycleNotFoundException,
-        PluginVersionResolutionException;
+        PluginVersionResolutionException, PluginConfigurationException;
 
     void execute( MavenSession session );
 
@@ -81,7 +82,8 @@ public interface LifecycleExecutor
     void calculateForkedExecutions( MojoExecution mojoExecution, MavenSession session )
         throws MojoNotFoundException, PluginNotFoundException, PluginResolutionException,
         PluginDescriptorParsingException, NoPluginFoundForPrefixException, InvalidPluginDescriptorException,
-        LifecyclePhaseNotFoundException, LifecycleNotFoundException, PluginVersionResolutionException;
+        LifecyclePhaseNotFoundException, LifecycleNotFoundException, PluginVersionResolutionException,
+        PluginConfigurationException;
 
     // used by the site plugin 3.x
     List<MavenProject> executeForkedExecutions( MojoExecution mojoExecution, MavenSession session )

@@ -26,6 +26,7 @@ import org.apache.maven.lifecycle.MavenExecutionPlan;
 import org.apache.maven.plugin.InvalidPluginDescriptorException;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoNotFoundException;
+import org.apache.maven.plugin.PluginConfigurationException;
 import org.apache.maven.plugin.PluginDescriptorParsingException;
 import org.apache.maven.plugin.PluginNotFoundException;
 import org.apache.maven.plugin.PluginResolutionException;
@@ -47,23 +48,27 @@ public interface LifecycleExecutionPlanCalculator
     MavenExecutionPlan calculateExecutionPlan( MavenSession session, MavenProject project, List<Object> tasks )
         throws PluginNotFoundException, PluginResolutionException, LifecyclePhaseNotFoundException,
         PluginDescriptorParsingException, MojoNotFoundException, InvalidPluginDescriptorException,
-        NoPluginFoundForPrefixException, LifecycleNotFoundException, PluginVersionResolutionException;
+        NoPluginFoundForPrefixException, LifecycleNotFoundException, PluginVersionResolutionException,
+        PluginConfigurationException;
 
     MavenExecutionPlan calculateExecutionPlan( MavenSession session, MavenProject project, List<Object> tasks,
                                                boolean setup )
         throws PluginNotFoundException, PluginResolutionException, LifecyclePhaseNotFoundException,
         PluginDescriptorParsingException, MojoNotFoundException, InvalidPluginDescriptorException,
-        NoPluginFoundForPrefixException, LifecycleNotFoundException, PluginVersionResolutionException;
+        NoPluginFoundForPrefixException, LifecycleNotFoundException, PluginVersionResolutionException,
+        PluginConfigurationException;
 
     void calculateForkedExecutions( MojoExecution mojoExecution, MavenSession session )
         throws MojoNotFoundException, PluginNotFoundException, PluginResolutionException,
         PluginDescriptorParsingException, NoPluginFoundForPrefixException, InvalidPluginDescriptorException,
-        LifecyclePhaseNotFoundException, LifecycleNotFoundException, PluginVersionResolutionException;
+        LifecyclePhaseNotFoundException, LifecycleNotFoundException, PluginVersionResolutionException,
+        PluginConfigurationException;
 
     void setupMojoExecution( MavenSession session, MavenProject project, MojoExecution mojoExecution,
                              Set<MojoDescriptor> alreadyPlannedExecutions )
         throws PluginNotFoundException, PluginResolutionException, PluginDescriptorParsingException,
         MojoNotFoundException, InvalidPluginDescriptorException, NoPluginFoundForPrefixException,
-        LifecyclePhaseNotFoundException, LifecycleNotFoundException, PluginVersionResolutionException;
+        LifecyclePhaseNotFoundException, LifecycleNotFoundException, PluginVersionResolutionException,
+        PluginConfigurationException;
 
 }

@@ -39,6 +39,7 @@ import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.InvalidPluginDescriptorException;
 import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoNotFoundException;
+import org.apache.maven.plugin.PluginConfigurationException;
 import org.apache.maven.plugin.PluginDescriptorParsingException;
 import org.apache.maven.plugin.PluginManagerException;
 import org.apache.maven.plugin.PluginNotFoundException;
@@ -118,7 +119,7 @@ public class DefaultLifecycleExecutor
         throws PluginNotFoundException, PluginResolutionException, PluginDescriptorParsingException,
         MojoNotFoundException, NoPluginFoundForPrefixException, InvalidPluginDescriptorException,
         PluginManagerException, LifecyclePhaseNotFoundException, LifecycleNotFoundException,
-        PluginVersionResolutionException
+        PluginVersionResolutionException, PluginConfigurationException
     {
         List<TaskSegment> taskSegments =
             lifecycleTaskSegmentCalculator.calculateTaskSegments( session, Arrays.asList( tasks ) );
@@ -138,7 +139,7 @@ public class DefaultLifecycleExecutor
         throws PluginNotFoundException, PluginResolutionException, PluginDescriptorParsingException,
         MojoNotFoundException, NoPluginFoundForPrefixException, InvalidPluginDescriptorException,
         PluginManagerException, LifecyclePhaseNotFoundException, LifecycleNotFoundException,
-        PluginVersionResolutionException
+        PluginVersionResolutionException, PluginConfigurationException
     {
         return calculateExecutionPlan( session, true, tasks );
     }
@@ -147,7 +148,8 @@ public class DefaultLifecycleExecutor
     public void calculateForkedExecutions( MojoExecution mojoExecution, MavenSession session )
         throws MojoNotFoundException, PluginNotFoundException, PluginResolutionException,
         PluginDescriptorParsingException, NoPluginFoundForPrefixException, InvalidPluginDescriptorException,
-        LifecyclePhaseNotFoundException, LifecycleNotFoundException, PluginVersionResolutionException
+        LifecyclePhaseNotFoundException, LifecycleNotFoundException, PluginVersionResolutionException,
+        PluginConfigurationException
     {
         lifecycleExecutionPlanCalculator.calculateForkedExecutions( mojoExecution, session );
     }
