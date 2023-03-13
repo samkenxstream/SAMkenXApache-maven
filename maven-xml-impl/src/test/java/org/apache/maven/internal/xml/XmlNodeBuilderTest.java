@@ -18,22 +18,27 @@
  */
 package org.apache.maven.internal.xml;
 
-public class MavenXmlException extends RuntimeException {
-    public MavenXmlException() {}
+import java.io.IOException;
+import java.io.StringReader;
 
-    public MavenXmlException(String message) {
-        super(message);
-    }
+import org.apache.maven.api.xml.XmlNode;
+import org.junit.jupiter.api.Test;
 
-    public MavenXmlException(String message, Throwable cause) {
-        super(message, cause);
-    }
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    public MavenXmlException(Throwable cause) {
-        super(cause);
-    }
+public class XmlNodeBuilderTest {
 
-    public MavenXmlException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    @Test
+    public void testReadMultiDoc() throws Exception {
+        String doc = "<?xml version='1.0'?><doc><child>foo</child></doc>";
+        StringReader r = new StringReader(doc + doc) {
+            @Override
+            public int read(char[] cbuf, int off, int len) throws IOException {
+                return super.read(cbuf, off, 1);
+            }
+        };
+        XmlNode node1 = XmlNodeBuilder.build(r);
+        XmlNode node2 = XmlNodeBuilder.build(r);
+        assertEquals(node1, node2);
     }
 }
