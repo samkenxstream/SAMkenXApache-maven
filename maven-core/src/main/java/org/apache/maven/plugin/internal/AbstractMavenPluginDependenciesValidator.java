@@ -18,12 +18,10 @@
  */
 package org.apache.maven.plugin.internal;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.PluginValidationManager;
-import org.apache.maven.plugin.descriptor.MojoDescriptor;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.resolution.ArtifactDescriptorResult;
 
 import static java.util.Objects.requireNonNull;
 
@@ -34,9 +32,6 @@ import static java.util.Objects.requireNonNull;
  */
 abstract class AbstractMavenPluginDependenciesValidator implements MavenPluginDependenciesValidator {
 
-    protected final List<String> expectedProvidedScopeExclusions = Arrays.asList(
-            "org.apache.maven:maven-archiver", "org.apache.maven:maven-jxr", "org.apache.maven:plexus-utils");
-
     protected final PluginValidationManager pluginValidationManager;
 
     protected AbstractMavenPluginDependenciesValidator(PluginValidationManager pluginValidationManager) {
@@ -44,12 +39,17 @@ abstract class AbstractMavenPluginDependenciesValidator implements MavenPluginDe
     }
 
     @Override
-    public void validate(MavenSession mavenSession, MojoDescriptor mojoDescriptor) {
-        if (mojoDescriptor.getPluginDescriptor() != null
-                && mojoDescriptor.getPluginDescriptor().getDependencies() != null) {
-            doValidate(mavenSession, mojoDescriptor);
+    public void validate(
+            RepositorySystemSession session,
+            Artifact pluginArtifact,
+            ArtifactDescriptorResult artifactDescriptorResult) {
+        if (artifactDescriptorResult.getDependencies() != null) {
+            doValidate(session, pluginArtifact, artifactDescriptorResult);
         }
     }
 
-    protected abstract void doValidate(MavenSession mavenSession, MojoDescriptor mojoDescriptor);
+    protected abstract void doValidate(
+            RepositorySystemSession session,
+            Artifact pluginArtifact,
+            ArtifactDescriptorResult artifactDescriptorResult);
 }

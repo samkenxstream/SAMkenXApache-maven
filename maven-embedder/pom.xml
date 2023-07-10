@@ -23,7 +23,7 @@ under the License.
   <parent>
     <groupId>org.apache.maven</groupId>
     <artifactId>maven</artifactId>
-    <version>4.0.0-alpha-6-SNAPSHOT</version>
+    <version>4.0.0-alpha-8-SNAPSHOT</version>
   </parent>
 
   <artifactId>maven-embedder</artifactId>
@@ -71,10 +71,6 @@ under the License.
     <dependency>
       <groupId>org.apache.maven.resolver</groupId>
       <artifactId>maven-resolver-util</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven.shared</groupId>
-      <artifactId>maven-shared-utils</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -147,13 +143,18 @@ under the License.
       <artifactId>commons-cli</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
+      <groupId>org.fusesource.jansi</groupId>
+      <artifactId>jansi</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.fusesource.jansi</groupId>
-      <artifactId>jansi</artifactId>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -177,14 +178,22 @@ under the License.
           <models>
             <model>src/main/mdo/core-extensions.mdo</model>
           </models>
+          <templates>
+            <template>model.vm</template>
+            <template>reader-stax.vm</template>
+            <template>writer-stax.vm</template>
+          </templates>
+          <params>
+            <param>packageModelV4=org.apache.maven.cli.internal.extension.model</param>
+            <param>packageToolV4=org.apache.maven.cli.internal.extension.io</param>
+          </params>
+          <velocityBasedir>${project.basedir}/../src/mdo</velocityBasedir>
         </configuration>
         <executions>
           <execution>
             <id>modello</id>
             <goals>
-              <goal>java</goal>
-              <goal>xpp3-reader</goal>
-              <goal>xpp3-writer</goal>
+              <goal>velocity</goal>
             </goals>
           </execution>
         </executions>

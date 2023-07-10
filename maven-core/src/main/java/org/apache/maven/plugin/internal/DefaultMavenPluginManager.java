@@ -22,14 +22,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.io.Reader;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -101,7 +99,6 @@ import org.codehaus.plexus.configuration.DefaultPlexusConfiguration;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 import org.codehaus.plexus.configuration.PlexusConfigurationException;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Contextualizable;
-import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.StringUtils;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.graph.DependencyFilter;
@@ -148,7 +145,6 @@ public class DefaultMavenPluginManager implements MavenPluginManager {
     private PluginArtifactsCache pluginArtifactsCache;
     private MavenPluginValidator pluginValidator;
     private List<MavenPluginConfigurationValidator> configurationValidators;
-    private List<MavenPluginDependenciesValidator> dependenciesValidators;
     private PluginValidationManager pluginValidationManager;
     private List<MavenPluginPrerequisitesChecker> prerequisitesCheckers;
     private final ExtensionDescriptorBuilder extensionDescriptorBuilder = new ExtensionDescriptorBuilder();
@@ -168,7 +164,6 @@ public class DefaultMavenPluginManager implements MavenPluginManager {
             PluginArtifactsCache pluginArtifactsCache,
             MavenPluginValidator pluginValidator,
             List<MavenPluginConfigurationValidator> configurationValidators,
-            List<MavenPluginDependenciesValidator> dependencyValidators,
             PluginValidationManager pluginValidationManager,
             List<MavenPluginPrerequisitesChecker> prerequisitesCheckers) {
         this.container = container;
@@ -182,7 +177,6 @@ public class DefaultMavenPluginManager implements MavenPluginManager {
         this.pluginArtifactsCache = pluginArtifactsCache;
         this.pluginValidator = pluginValidator;
         this.configurationValidators = configurationValidators;
-        this.dependenciesValidators = dependencyValidators;
         this.pluginValidationManager = pluginValidationManager;
         this.prerequisitesCheckers = prerequisitesCheckers;
     }
@@ -234,7 +228,7 @@ public class DefaultMavenPluginManager implements MavenPluginManager {
                 File pluginXml = new File(pluginFile, getPluginDescriptorLocation());
 
                 if (pluginXml.isFile()) {
-                    try (InputStream is = new BufferedInputStream(new FileInputStream(pluginXml))) {
+                    try (InputStream is = Files.newInputStream(pluginXml.toPath())) {
                         pluginDescriptor = parsePluginDescriptor(is, plugin, pluginXml.getAbsolutePath());
                     }
                 }
@@ -267,10 +261,8 @@ public class DefaultMavenPluginManager implements MavenPluginManager {
     private PluginDescriptor parsePluginDescriptor(InputStream is, Plugin plugin, String descriptorLocation)
             throws PluginDescriptorParsingException {
         try {
-            Reader reader = ReaderFactory.newXmlReader(is);
-
-            return builder.build(reader, descriptorLocation);
-        } catch (IOException | PlexusConfigurationException e) {
+            return builder.build(is, descriptorLocation);
+        } catch (PlexusConfigurationException e) {
             throw new PluginDescriptorParsingException(plugin, descriptorLocation, e);
         }
     }
@@ -568,14 +560,11 @@ public class DefaultMavenPluginManager implements MavenPluginManager {
 
             if (mojo instanceof Contextualizable) {
                 pluginValidationManager.reportPluginMojoValidationIssue(
+                        PluginValidationManager.IssueLocality.EXTERNAL,
                         session,
                         mojoDescriptor,
                         mojo.getClass(),
-                        "Implements `Contextualizable` interface from Plexus Container, which is EOL.");
-            }
-
-            for (MavenPluginDependenciesValidator validator : dependenciesValidators) {
-                validator.validate(session, mojoDescriptor);
+                        "Mojo implements `Contextualizable` interface from Plexus Container, which is EOL.");
             }
 
             XmlNode dom = mojoExecution.getConfiguration() != null
@@ -631,7 +620,7 @@ public class DefaultMavenPluginManager implements MavenPluginManager {
 
         String configuratorId = mojoDescriptor.getComponentConfigurator();
 
-        if (StringUtils.isEmpty(configuratorId)) {
+        if (configuratorId == null || configuratorId.isEmpty()) {
             configuratorId = mojoDescriptor.isV4Api() ? "enhanced" : "basic";
         }
 

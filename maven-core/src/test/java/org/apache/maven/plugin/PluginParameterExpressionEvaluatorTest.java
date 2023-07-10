@@ -21,6 +21,9 @@ package org.apache.maven.plugin;
 import javax.inject.Inject;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,6 +34,7 @@ import org.apache.maven.AbstractCoreMavenComponentTestCase;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.ArtifactUtils;
 import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.bridge.MavenRepositorySystem;
 import org.apache.maven.execution.DefaultMavenExecutionRequest;
 import org.apache.maven.execution.DefaultMavenExecutionResult;
 import org.apache.maven.execution.MavenExecutionRequest;
@@ -38,11 +42,11 @@ import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Build;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Model;
+import org.apache.maven.model.root.RootLocator;
 import org.apache.maven.plugin.descriptor.MojoDescriptor;
 import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.apache.maven.project.DuplicateProjectException;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.repository.RepositorySystem;
 import org.codehaus.plexus.MutablePlexusContainer;
 import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator;
@@ -51,8 +55,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.codehaus.plexus.testing.PlexusExtension.getTestFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -62,7 +69,9 @@ class PluginParameterExpressionEvaluatorTest extends AbstractCoreMavenComponentT
     private static final String FS = File.separator;
 
     @Inject
-    private RepositorySystem factory;
+    private MavenRepositorySystem factory;
+
+    private Path rootDirectory;
 
     @Test
     void testPluginDescriptorExpressionReference() throws Exception {
@@ -357,17 +366,40 @@ class PluginParameterExpressionEvaluatorTest extends AbstractCoreMavenComponentT
         assertEquals("testGroup", result.getGroupId());
     }
 
+    @Test
+    void testRootDirectoryNotPrefixed() throws Exception {
+        ExpressionEvaluator ee = createExpressionEvaluator(createDefaultProject(), null, new Properties());
+        assertNull(ee.evaluate("${rootDirectory}"));
+    }
+
+    @Test
+    void testRootDirectoryWithNull() throws Exception {
+        ExpressionEvaluator ee = createExpressionEvaluator(createDefaultProject(), null, new Properties());
+        Exception e = assertThrows(Exception.class, () -> ee.evaluate("${session.rootDirectory}"));
+        e = assertInstanceOf(InvocationTargetException.class, e.getCause());
+        e = assertInstanceOf(IllegalStateException.class, e.getCause());
+        assertEquals(RootLocator.UNABLE_TO_FIND_ROOT_PROJECT_MESSAGE, e.getMessage());
+    }
+
+    @Test
+    void testRootDirectory() throws Exception {
+        this.rootDirectory = Paths.get("myRootDirectory");
+        ExpressionEvaluator ee = createExpressionEvaluator(createDefaultProject(), null, new Properties());
+        assertInstanceOf(Path.class, ee.evaluate("${session.rootDirectory}"));
+    }
+
     private MavenProject createDefaultProject() {
         return new MavenProject(new Model());
     }
 
     private ExpressionEvaluator createExpressionEvaluator(
             MavenProject project, PluginDescriptor pluginDescriptor, Properties executionProperties) throws Exception {
-        ArtifactRepository repo = factory.createDefaultLocalRepository();
+        ArtifactRepository repo = getLocalRepository();
 
         MutablePlexusContainer container = (MutablePlexusContainer) getContainer();
         MavenSession session = createSession(container, repo, executionProperties);
         session.setCurrentProject(project);
+        session.getRequest().setRootDirectory(rootDirectory);
 
         MojoDescriptor mojo = new MojoDescriptor();
         mojo.setPluginDescriptor(pluginDescriptor);

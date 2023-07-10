@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
+import org.apache.maven.bridge.MavenRepositorySystem;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
@@ -36,7 +37,6 @@ import org.apache.maven.model.ReportPlugin;
 import org.apache.maven.model.ReportSet;
 import org.apache.maven.model.building.ModelBuildingRequest;
 import org.apache.maven.project.harness.PomTestWrapper;
-import org.apache.maven.repository.RepositorySystem;
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.codehaus.plexus.testing.PlexusTest;
 import org.eclipse.aether.DefaultRepositorySystemSession;
@@ -71,7 +71,7 @@ class PomConstructionTest {
     private DefaultProjectBuilder projectBuilder;
 
     @Inject
-    private RepositorySystem repositorySystem;
+    private MavenRepositorySystem repositorySystem;
 
     private File testDirectory;
 
@@ -175,7 +175,7 @@ class PomConstructionTest {
         assertEquals("||${project.basedir}||", originalModel.getProperties().get("prop-outside"));
 
         List<Plugin> outsidePlugins = originalModel.getBuild().getPlugins();
-        assertEquals(2, outsidePlugins.size());
+        assertEquals(1, outsidePlugins.size());
 
         checkBuildPluginWithArtifactId(
                 outsidePlugins,
@@ -270,7 +270,7 @@ class PomConstructionTest {
         assertEquals("||${project.basedir}||", originalModel.getProperties().get("prop-outside"));
 
         List<ReportPlugin> outsidePlugins = originalModel.getReporting().getPlugins();
-        assertEquals(2, outsidePlugins.size(), "Wrong number of plugins found");
+        assertEquals(1, outsidePlugins.size(), "Wrong number of plugins found");
 
         checkReportPluginWithArtifactId(
                 outsidePlugins,
@@ -575,7 +575,7 @@ class PomConstructionTest {
     @Test
     void testMultipleRepositories() throws Exception {
         PomTestWrapper pom = buildPom("multiple-repos/sub");
-        assertEquals(3, ((List<?>) pom.getValue("repositories")).size());
+        assertEquals(2, ((List<?>) pom.getValue("repositories")).size());
     }
 
     /** MNG-3965 */
@@ -1371,12 +1371,10 @@ class PomConstructionTest {
         assertEquals("org.apache.maven.its", pom.getValue("dependencies[1]/exclusions[1]/groupId"));
         assertEquals("excluded-dep", pom.getValue("dependencies[1]/exclusions[1]/artifactId"));
 
-        assertEquals(2, ((List<?>) pom.getValue("repositories")).size());
+        assertEquals(1, ((List<?>) pom.getValue("repositories")).size());
         assertEquals("project-remote-repo", pom.getValue("repositories[1]/id"));
         assertEquals("https://project.url/remote", pom.getValue("repositories[1]/url"));
         assertEquals("repo", pom.getValue("repositories[1]/name"));
-        assertEquals(RepositorySystem.DEFAULT_REMOTE_REPO_ID, pom.getValue("repositories[2]/id"));
-        assertEquals(RepositorySystem.DEFAULT_REMOTE_REPO_URL, pom.getValue("repositories[2]/url"));
 
         assertEquals("test", pom.getValue("build/defaultGoal"));
         assertEquals("coreit", pom.getValue("build/finalName"));

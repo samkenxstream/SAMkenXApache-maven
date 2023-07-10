@@ -18,6 +18,11 @@
  */
 package org.apache.maven.artifact.repository.metadata;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+import javax.xml.stream.XMLStreamException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,26 +39,24 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.repository.ArtifactRepositoryPolicy;
 import org.apache.maven.artifact.repository.DefaultRepositoryRequest;
 import org.apache.maven.artifact.repository.RepositoryRequest;
-import org.apache.maven.artifact.repository.metadata.io.xpp3.MetadataXpp3Reader;
-import org.apache.maven.artifact.repository.metadata.io.xpp3.MetadataXpp3Writer;
+import org.apache.maven.artifact.repository.metadata.io.MetadataStaxReader;
+import org.apache.maven.artifact.repository.metadata.io.MetadataStaxWriter;
 import org.apache.maven.repository.legacy.UpdateCheckManager;
 import org.apache.maven.repository.legacy.WagonManager;
 import org.apache.maven.wagon.ResourceDoesNotExistException;
 import org.apache.maven.wagon.TransferFailedException;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 /**
  * @author Jason van Zyl
  */
-@Component(role = RepositoryMetadataManager.class)
+@Named
+@Singleton
 public class DefaultRepositoryMetadataManager extends AbstractLogEnabled implements RepositoryMetadataManager {
-    @Requirement
+    @Inject
     private WagonManager wagonManager;
 
-    @Requirement
+    @Inject
     private UpdateCheckManager updateCheckManager;
 
     public void resolve(
@@ -267,13 +270,11 @@ public class DefaultRepositoryMetadataManager extends AbstractLogEnabled impleme
      */
     protected Metadata readMetadata(File mappingFile) throws RepositoryMetadataReadException {
 
-        MetadataXpp3Reader mappingReader = new MetadataXpp3Reader();
         try (InputStream in = Files.newInputStream(mappingFile.toPath())) {
-            Metadata result = mappingReader.read(in, false);
-            return result;
+            return new Metadata(new MetadataStaxReader().read(in, false));
         } catch (FileNotFoundException e) {
             throw new RepositoryMetadataReadException("Cannot read metadata from '" + mappingFile + "'", e);
-        } catch (IOException | XmlPullParserException e) {
+        } catch (IOException | XMLStreamException e) {
             throw new RepositoryMetadataReadException(
                     "Cannot read metadata from '" + mappingFile + "': " + e.getMessage(), e);
         }
@@ -308,8 +309,8 @@ public class DefaultRepositoryMetadataManager extends AbstractLogEnabled impleme
             getLogger().debug("Repairing metadata in " + metadataFile);
 
             try (OutputStream out = Files.newOutputStream(metadataFile.toPath())) {
-                new MetadataXpp3Writer().write(out, metadata);
-            } catch (IOException e) {
+                new MetadataStaxWriter().write(out, metadata.getDelegate());
+            } catch (IOException | XMLStreamException e) {
                 String msg = "Could not write fixed metadata to " + metadataFile + ": " + e.getMessage();
                 if (getLogger().isDebugEnabled()) {
                     getLogger().warn(msg, e);

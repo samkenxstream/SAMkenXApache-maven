@@ -18,6 +18,10 @@
  */
 package org.apache.maven.repository.legacy;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,8 +71,6 @@ import org.apache.maven.settings.crypto.SettingsDecryptionResult;
 import org.apache.maven.wagon.proxy.ProxyInfo;
 import org.apache.maven.wagon.proxy.ProxyUtils;
 import org.codehaus.plexus.PlexusContainer;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.StringUtils;
@@ -81,34 +83,35 @@ import org.eclipse.aether.repository.RemoteRepository;
 /**
  * @author Jason van Zyl
  */
-@Component(role = RepositorySystem.class, hint = "default")
+@Named("default")
+@Singleton
 public class LegacyRepositorySystem implements RepositorySystem {
 
-    @Requirement
+    @Inject
     private Logger logger;
 
-    @Requirement
+    @Inject
     private ArtifactFactory artifactFactory;
 
-    @Requirement
+    @Inject
     private ArtifactResolver artifactResolver;
 
-    @Requirement
+    @Inject
     private ArtifactRepositoryFactory artifactRepositoryFactory;
 
-    @Requirement(role = ArtifactRepositoryLayout.class)
+    @Inject
     private Map<String, ArtifactRepositoryLayout> layouts;
 
-    @Requirement
+    @Inject
     private WagonManager wagonManager;
 
-    @Requirement
+    @Inject
     private PlexusContainer plexus;
 
-    @Requirement
+    @Inject
     private MirrorSelector mirrorSelector;
 
-    @Requirement
+    @Inject
     private SettingsDecrypter settingsDecrypter;
 
     public Artifact createArtifact(String groupId, String artifactId, String version, String scope, String type) {
@@ -191,7 +194,7 @@ public class LegacyRepositorySystem implements RepositorySystem {
 
     public Artifact createPluginArtifact(Plugin plugin) {
         String version = plugin.getVersion();
-        if (StringUtils.isEmpty(version)) {
+        if (version == null || version.isEmpty()) {
             version = "RELEASE";
         }
 
@@ -683,13 +686,13 @@ public class LegacyRepositorySystem implements RepositorySystem {
         if (repo != null) {
             String id = repo.getId();
 
-            if (StringUtils.isEmpty(id)) {
+            if (id == null || id.isEmpty()) {
                 throw new InvalidRepositoryException("Repository identifier missing", "");
             }
 
             String url = repo.getUrl();
 
-            if (StringUtils.isEmpty(url)) {
+            if (url == null || url.isEmpty()) {
                 throw new InvalidRepositoryException("URL missing for repository " + id, id);
             }
 
@@ -738,7 +741,7 @@ public class LegacyRepositorySystem implements RepositorySystem {
             return def;
         }
         String msg = error.getMessage();
-        if (StringUtils.isNotEmpty(msg)) {
+        if (msg != null && !msg.isEmpty()) {
             return msg;
         }
         return getMessage(error.getCause(), def);

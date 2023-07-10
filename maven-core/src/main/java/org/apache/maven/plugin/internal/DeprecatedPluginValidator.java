@@ -22,11 +22,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.maven.api.services.MessageBuilderFactory;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.PluginValidationManager;
 import org.apache.maven.plugin.descriptor.MojoDescriptor;
 import org.apache.maven.plugin.descriptor.Parameter;
-import org.apache.maven.shared.utils.logging.MessageUtils;
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluator;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
 
@@ -39,9 +39,13 @@ import org.codehaus.plexus.configuration.PlexusConfiguration;
 @Named
 class DeprecatedPluginValidator extends AbstractMavenPluginDescriptorSourcedParametersValidator {
 
+    private final MessageBuilderFactory messageBuilderFactory;
+
     @Inject
-    DeprecatedPluginValidator(PluginValidationManager pluginValidationManager) {
+    DeprecatedPluginValidator(
+            PluginValidationManager pluginValidationManager, MessageBuilderFactory messageBuilderFactory) {
         super(pluginValidationManager);
+        this.messageBuilderFactory = messageBuilderFactory;
     }
 
     @Override
@@ -58,7 +62,11 @@ class DeprecatedPluginValidator extends AbstractMavenPluginDescriptorSourcedPara
             ExpressionEvaluator expressionEvaluator) {
         if (mojoDescriptor.getDeprecated() != null) {
             pluginValidationManager.reportPluginMojoValidationIssue(
-                    mavenSession, mojoDescriptor, mojoClass, logDeprecatedMojo(mojoDescriptor));
+                    PluginValidationManager.IssueLocality.INTERNAL,
+                    mavenSession,
+                    mojoDescriptor,
+                    mojoClass,
+                    logDeprecatedMojo(mojoDescriptor));
         }
 
         if (mojoDescriptor.getParameters() != null) {
@@ -81,12 +89,17 @@ class DeprecatedPluginValidator extends AbstractMavenPluginDescriptorSourcedPara
 
         if (isValueSet(config, expressionEvaluator)) {
             pluginValidationManager.reportPluginMojoValidationIssue(
-                    mavenSession, mojoDescriptor, mojoClass, formatParameter(parameter));
+                    PluginValidationManager.IssueLocality.INTERNAL,
+                    mavenSession,
+                    mojoDescriptor,
+                    mojoClass,
+                    formatParameter(parameter));
         }
     }
 
     private String logDeprecatedMojo(MojoDescriptor mojoDescriptor) {
-        return MessageUtils.buffer()
+        return messageBuilderFactory
+                .builder()
                 .warning("Goal '")
                 .warning(mojoDescriptor.getGoal())
                 .warning("' is deprecated: ")

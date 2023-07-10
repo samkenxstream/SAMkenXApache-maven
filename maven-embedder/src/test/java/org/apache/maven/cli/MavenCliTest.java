@@ -22,8 +22,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -32,24 +35,33 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.maven.Maven;
+import org.apache.maven.cli.jansi.MessageUtils;
+import org.apache.maven.cli.transfer.ConsoleMavenTransferListener;
+import org.apache.maven.cli.transfer.QuietMavenTransferListener;
+import org.apache.maven.cli.transfer.Slf4jMavenTransferListener;
 import org.apache.maven.eventspy.internal.EventSpyDispatcher;
 import org.apache.maven.execution.MavenExecutionRequest;
 import org.apache.maven.execution.ProfileActivation;
 import org.apache.maven.execution.ProjectActivation;
+import org.apache.maven.model.root.DefaultRootLocator;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.shared.utils.logging.MessageUtils;
 import org.apache.maven.toolchain.building.ToolchainsBuildingRequest;
 import org.apache.maven.toolchain.building.ToolchainsBuildingResult;
 import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.PlexusContainer;
+import org.eclipse.aether.transfer.TransferListener;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InOrder;
 
 import static java.util.Arrays.asList;
 import static org.apache.maven.cli.MavenCli.performProfileActivation;
 import static org.apache.maven.cli.MavenCli.performProjectActivation;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -330,6 +342,20 @@ class MavenCliTest {
         assertFalse(MessageUtils.isColorEnabled());
 
         MessageUtils.setColorEnabled(true);
+        request = new CliRequest(new String[] {"--non-interactive"}, null);
+        cli.cli(request);
+        cli.properties(request);
+        cli.logging(request);
+        assertFalse(MessageUtils.isColorEnabled());
+
+        MessageUtils.setColorEnabled(true);
+        request = new CliRequest(new String[] {"--force-interactive", "--non-interactive"}, null);
+        cli.cli(request);
+        cli.properties(request);
+        cli.logging(request);
+        assertTrue(MessageUtils.isColorEnabled());
+
+        MessageUtils.setColorEnabled(true);
         request = new CliRequest(new String[] {"-l", "target/temp/mvn.log"}, null);
         request.workingDirectory = "target/temp";
         cli.cli(request);
@@ -541,6 +567,106 @@ class MavenCliTest {
 
         // Assert
         assertThat(request.getUserProperties().getProperty("x"), is("false"));
+    }
+
+    @Test
+    public void findRootProjectWithAttribute() {
+        Path test = Paths.get("src/test/projects/root-attribute");
+        assertEquals(test, new DefaultRootLocator().findRoot(test.resolve("child")));
+    }
+
+    @Test
+    public void testPropertiesInterpolation() throws Exception {
+        // Arrange
+        CliRequest request = new CliRequest(
+                new String[] {
+                    "-Dfoo=bar",
+                    "-DvalFound=s${foo}i",
+                    "-DvalNotFound=s${foz}i",
+                    "-DvalRootDirectory=${session.rootDirectory}/.mvn/foo",
+                    "-DvalTopDirectory=${session.topDirectory}/pom.xml",
+                    "-f",
+                    "${session.rootDirectory}/my-child",
+                    "prefix:3.0.0:${foo}",
+                    "validate"
+                },
+                null);
+        request.rootDirectory = Paths.get("myRootDirectory");
+        request.topDirectory = Paths.get("myTopDirectory");
+
+        // Act
+        cli.cli(request);
+        cli.properties(request);
+
+        // Assert
+        assertThat(request.getUserProperties().getProperty("valFound"), is("sbari"));
+        assertThat(request.getUserProperties().getProperty("valNotFound"), is("s${foz}i"));
+        assertThat(request.getUserProperties().getProperty("valRootDirectory"), is("myRootDirectory/.mvn/foo"));
+        assertThat(request.getUserProperties().getProperty("valTopDirectory"), is("myTopDirectory/pom.xml"));
+        assertThat(request.getCommandLine().getOptionValue('f'), is("myRootDirectory/my-child"));
+        assertThat(request.getCommandLine().getArgs(), equalTo(new String[] {"prefix:3.0.0:bar", "validate"}));
+    }
+
+    @ParameterizedTest
+    @MethodSource("activateBatchModeArguments")
+    public void activateBatchMode(boolean ciEnv, String[] cliArgs, boolean isBatchMode) throws Exception {
+        CliRequest request = new CliRequest(cliArgs, null);
+        if (ciEnv) request.getSystemProperties().put("env.CI", "true");
+        cli.cli(request);
+
+        boolean batchMode = !cli.populateRequest(request).isInteractiveMode();
+
+        assertThat(batchMode, is(isBatchMode));
+    }
+
+    public static Stream<Arguments> activateBatchModeArguments() {
+        return Stream.of(
+                Arguments.of(false, new String[] {}, false),
+                Arguments.of(true, new String[] {}, true),
+                Arguments.of(true, new String[] {"--force-interactive"}, false),
+                Arguments.of(true, new String[] {"--force-interactive", "--non-interactive"}, false),
+                Arguments.of(true, new String[] {"--force-interactive", "--batch-mode"}, false),
+                Arguments.of(true, new String[] {"--force-interactive", "--non-interactive", "--batch-mode"}, false),
+                Arguments.of(false, new String[] {"--non-interactive"}, true),
+                Arguments.of(false, new String[] {"--batch-mode"}, true),
+                Arguments.of(false, new String[] {"--non-interactive", "--batch-mode"}, true));
+    }
+
+    @ParameterizedTest
+    @MethodSource("calculateTransferListenerArguments")
+    public void calculateTransferListener(boolean ciEnv, String[] cliArgs, Class<TransferListener> expectedSubClass)
+            throws Exception {
+        CliRequest request = new CliRequest(cliArgs, null);
+        if (ciEnv) request.getSystemProperties().put("env.CI", "true");
+        cli.cli(request);
+        cli.logging(request);
+
+        TransferListener transferListener = cli.populateRequest(request).getTransferListener();
+
+        assertThat(transferListener.getClass(), is(expectedSubClass));
+    }
+
+    public static Stream<Arguments> calculateTransferListenerArguments() {
+        return Stream.of(
+                Arguments.of(false, new String[] {}, ConsoleMavenTransferListener.class),
+                Arguments.of(true, new String[] {}, QuietMavenTransferListener.class),
+                Arguments.of(false, new String[] {"-ntp"}, QuietMavenTransferListener.class),
+                Arguments.of(false, new String[] {"--quiet"}, QuietMavenTransferListener.class),
+                Arguments.of(true, new String[] {"--force-interactive"}, ConsoleMavenTransferListener.class),
+                Arguments.of(
+                        true,
+                        new String[] {"--force-interactive", "--non-interactive"},
+                        ConsoleMavenTransferListener.class),
+                Arguments.of(
+                        true, new String[] {"--force-interactive", "--batch-mode"}, ConsoleMavenTransferListener.class),
+                Arguments.of(
+                        true,
+                        new String[] {"--force-interactive", "--non-interactive", "--batch-mode"},
+                        ConsoleMavenTransferListener.class),
+                Arguments.of(false, new String[] {"--non-interactive"}, Slf4jMavenTransferListener.class),
+                Arguments.of(false, new String[] {"--batch-mode"}, Slf4jMavenTransferListener.class),
+                Arguments.of(
+                        false, new String[] {"--non-interactive", "--batch-mode"}, Slf4jMavenTransferListener.class));
     }
 
     private MavenProject createMavenProject(String groupId, String artifactId) {

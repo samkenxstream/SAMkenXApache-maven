@@ -18,8 +18,11 @@
  */
 package org.apache.maven.internal.transformation;
 
+import javax.annotation.PreDestroy;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,21 +32,18 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.BiConsumer;
 
 import org.apache.maven.feature.Features;
 import org.apache.maven.model.building.DefaultBuildPomXMLFilterFactory;
 import org.apache.maven.model.building.TransformerContext;
 import org.apache.maven.model.transform.RawToConsumerPomXMLFilterFactory;
-import org.apache.maven.model.transform.pull.XmlUtils;
+import org.apache.maven.model.transform.stax.XmlUtils;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.artifact.ProjectArtifact;
-import org.codehaus.plexus.util.ReaderFactory;
-import org.codehaus.plexus.util.xml.XmlStreamReader;
-import org.codehaus.plexus.util.xml.pull.EntityReplacementMap;
-import org.codehaus.plexus.util.xml.pull.MXParser;
-import org.codehaus.plexus.util.xml.pull.XmlPullParser;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.codehaus.stax2.XMLInputFactory2;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
@@ -61,7 +61,13 @@ public final class ConsumerPomArtifactTransformer {
 
     private static final String CONSUMER_POM_CLASSIFIER = "consumer";
 
+    private final Set<Path> toDelete = new CopyOnWriteArraySet<>();
+
     public void injectTransformedArtifacts(MavenProject project, RepositorySystemSession session) throws IOException {
+        if (project.getFile() == null) {
+            // If there is no build POM there is no reason to inject artifacts for the consumer POM.
+            return;
+        }
         if (isActive(session)) {
             Path generatedFile;
             String buildDirectory =
@@ -73,7 +79,26 @@ public final class ConsumerPomArtifactTransformer {
                 Files.createDirectories(buildDir);
                 generatedFile = Files.createTempFile(buildDir, CONSUMER_POM_CLASSIFIER, "pom");
             }
+            deferDeleteFile(generatedFile);
             project.addAttachedArtifact(new ConsumerPomArtifact(project, generatedFile, session));
+        } else if (project.getModel().isRoot()) {
+            throw new IllegalStateException(
+                    "The use of the root attribute on the model requires the buildconsumer feature to be active");
+        }
+    }
+
+    private void deferDeleteFile(Path generatedFile) {
+        toDelete.add(generatedFile.toAbsolutePath());
+    }
+
+    @PreDestroy
+    private void doDeleteFiles() {
+        for (Path file : toDelete) {
+            try {
+                Files.delete(file);
+            } catch (IOException e) {
+                // ignore, we did our best...
+            }
         }
     }
 
@@ -147,7 +172,7 @@ public final class ConsumerPomArtifactTransformer {
                 try (InputStream inputStream = transform(src, context)) {
                     Files.createDirectories(dest.getParent());
                     Files.copy(inputStream, dest, StandardCopyOption.REPLACE_EXISTING);
-                } catch (XmlPullParserException | IOException e) {
+                } catch (XMLStreamException | IOException e) {
                     throw new RuntimeException(e);
                 }
             };
@@ -157,13 +182,14 @@ public final class ConsumerPomArtifactTransformer {
     /**
      * The actual transformation: visible for testing.
      */
-    static InputStream transform(Path pomFile, TransformerContext context) throws IOException, XmlPullParserException {
-        XmlStreamReader reader = ReaderFactory.newXmlReader(Files.newInputStream(pomFile));
-        XmlPullParser parser = new MXParser(EntityReplacementMap.defaultEntityReplacementMap);
-        parser.setInput(reader);
-        parser = new RawToConsumerPomXMLFilterFactory(new DefaultBuildPomXMLFilterFactory(context, true))
-                .get(parser, pomFile);
-
-        return XmlUtils.writeDocument(reader, parser);
+    static InputStream transform(Path pomFile, TransformerContext context) throws IOException, XMLStreamException {
+        try (InputStream input = Files.newInputStream(pomFile)) {
+            XMLInputFactory2 factory = new com.ctc.wstx.stax.WstxInputFactory();
+            factory.configureForRoundTripping();
+            XMLStreamReader reader = factory.createXMLStreamReader(input);
+            reader = new RawToConsumerPomXMLFilterFactory(new DefaultBuildPomXMLFilterFactory(context, true))
+                    .get(reader, pomFile);
+            return XmlUtils.writeDocument(reader);
+        }
     }
 }

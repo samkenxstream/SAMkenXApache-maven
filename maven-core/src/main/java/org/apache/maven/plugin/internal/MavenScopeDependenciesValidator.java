@@ -25,14 +25,16 @@ import javax.inject.Singleton;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.PluginValidationManager;
-import org.apache.maven.plugin.descriptor.MojoDescriptor;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.resolution.ArtifactDescriptorResult;
+import org.eclipse.aether.util.artifact.JavaScopes;
 
 /**
- * Detects Maven3 artifacts in bad scope in plugins.
+ * Detects Maven3 dependencies scope.
  *
- * @since 3.9.2
+ * @since 3.9.3
  */
 @Singleton
 @Named
@@ -44,19 +46,27 @@ class MavenScopeDependenciesValidator extends AbstractMavenPluginDependenciesVal
     }
 
     @Override
-    protected void doValidate(MavenSession mavenSession, MojoDescriptor mojoDescriptor) {
-        Set<String> mavenArtifacts = mojoDescriptor.getPluginDescriptor().getDependencies().stream()
-                .filter(d -> "org.apache.maven".equals(d.getGroupId()))
-                .filter(d -> !expectedProvidedScopeExclusions.contains(d.getGroupId() + ":" + d.getArtifactId()))
-                .filter(d -> d.getVersion().startsWith("3."))
-                .map(d -> d.getGroupId() + ":" + d.getArtifactId() + ":" + d.getVersion())
+    protected void doValidate(
+            RepositorySystemSession session,
+            Artifact pluginArtifact,
+            ArtifactDescriptorResult artifactDescriptorResult) {
+        Set<String> mavenArtifacts = artifactDescriptorResult.getDependencies().stream()
+                .filter(d -> !JavaScopes.PROVIDED.equals(d.getScope()) && !JavaScopes.TEST.equals(d.getScope()))
+                .map(org.eclipse.aether.graph.Dependency::getArtifact)
+                .filter(a -> "org.apache.maven".equals(a.getGroupId()))
+                .filter(a -> !DefaultPluginValidationManager.EXPECTED_PROVIDED_SCOPE_EXCLUSIONS_GA.contains(
+                        a.getGroupId() + ":" + a.getArtifactId()))
+                .filter(a -> a.getVersion().startsWith("3."))
+                .map(a -> a.getGroupId() + ":" + a.getArtifactId() + ":" + a.getVersion())
                 .collect(Collectors.toSet());
 
         if (!mavenArtifacts.isEmpty()) {
             pluginValidationManager.reportPluginValidationIssue(
-                    mavenSession,
-                    mojoDescriptor,
-                    "Plugin should declare these Maven artifacts in `provided` scope: " + mavenArtifacts);
+                    PluginValidationManager.IssueLocality.EXTERNAL,
+                    session,
+                    pluginArtifact,
+                    "Plugin should declare Maven artifacts in `provided` scope. If the plugin already declares them in `provided` scope, update the maven-plugin-plugin to latest version. Artifacts found with wrong scope: "
+                            + mavenArtifacts);
         }
     }
 }

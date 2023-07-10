@@ -18,17 +18,21 @@
  */
 package org.apache.maven.plugin.internal;
 
-import org.apache.maven.execution.MavenSession;
-import org.apache.maven.plugin.descriptor.MojoDescriptor;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.resolution.ArtifactDescriptorResult;
 
 /**
  * Service responsible for validating plugin dependencies.
  *
- * @since 3.9.2
+ * @since 3.9.3
  */
 interface MavenPluginDependenciesValidator {
     /**
      * Checks mojo dependency issues.
      */
-    void validate(MavenSession mavenSession, MojoDescriptor mojoDescriptor);
+    void validate(
+            RepositorySystemSession session,
+            Artifact pluginArtifact,
+            ArtifactDescriptorResult artifactDescriptorResult);
 }

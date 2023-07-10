@@ -25,10 +25,11 @@ import javax.inject.Singleton;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.PluginValidationManager;
-import org.apache.maven.plugin.descriptor.MojoDescriptor;
-import org.codehaus.plexus.component.repository.ComponentDependency;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.graph.Dependency;
+import org.eclipse.aether.resolution.ArtifactDescriptorResult;
 
 /**
  * Detects Maven2 plugins.
@@ -45,18 +46,24 @@ class Maven2DependenciesValidator extends AbstractMavenPluginDependenciesValidat
     }
 
     @Override
-    protected void doValidate(MavenSession mavenSession, MojoDescriptor mojoDescriptor) {
-        Set<String> maven2Versions = mojoDescriptor.getPluginDescriptor().getDependencies().stream()
+    protected void doValidate(
+            RepositorySystemSession session,
+            Artifact pluginArtifact,
+            ArtifactDescriptorResult artifactDescriptorResult) {
+        Set<String> maven2Versions = artifactDescriptorResult.getDependencies().stream()
+                .map(Dependency::getArtifact)
                 .filter(d -> "org.apache.maven".equals(d.getGroupId()))
-                .filter(d -> !expectedProvidedScopeExclusions.contains(d.getGroupId() + ":" + d.getArtifactId()))
-                .map(ComponentDependency::getVersion)
+                .filter(d -> !DefaultPluginValidationManager.EXPECTED_PROVIDED_SCOPE_EXCLUSIONS_GA.contains(
+                        d.getGroupId() + ":" + d.getArtifactId()))
+                .map(Artifact::getVersion)
                 .filter(v -> v.startsWith("2."))
                 .collect(Collectors.toSet());
 
         if (!maven2Versions.isEmpty()) {
             pluginValidationManager.reportPluginValidationIssue(
-                    mavenSession,
-                    mojoDescriptor,
+                    PluginValidationManager.IssueLocality.EXTERNAL,
+                    session,
+                    pluginArtifact,
                     "Plugin is a Maven 2.x plugin, which will be not supported in Maven 4.x");
         }
     }

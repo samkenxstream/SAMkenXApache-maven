@@ -40,7 +40,9 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
+import org.apache.maven.api.model.Exclusion;
 import org.apache.maven.api.model.InputSource;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
@@ -656,7 +658,7 @@ public class DefaultModelBuilder implements ModelBuilder {
         Model fileModel = readFileModel(request, problems);
 
         request.setFileModel(fileModel);
-        result.setFileModel(fileModel);
+        result.setFileModel(fileModel.clone());
 
         activateFileModel(request, result, problems);
 
@@ -1033,11 +1035,13 @@ public class DefaultModelBuilder implements ModelBuilder {
 
             if (source != null) {
                 try {
-                    org.apache.maven.api.model.InputSource v4src =
-                            model.getLocation("").getSource();
-                    Field field = InputSource.class.getDeclaredField("modelId");
-                    field.setAccessible(true);
-                    field.set(v4src, ModelProblemUtils.toId(model));
+                    org.apache.maven.api.model.InputLocation loc = model.getLocation("");
+                    org.apache.maven.api.model.InputSource v4src = loc != null ? loc.getSource() : null;
+                    if (v4src != null) {
+                        Field field = InputSource.class.getDeclaredField("modelId");
+                        field.setAccessible(true);
+                        field.set(v4src, ModelProblemUtils.toId(model));
+                    }
                 } catch (Throwable t) {
                     // TODO: use a lazy source ?
                     throw new IllegalStateException("Unable to set modelId on InputSource", t);
@@ -1575,7 +1579,7 @@ public class DefaultModelBuilder implements ModelBuilder {
     }
 
     private Model getSuperModel() {
-        return new Model(superPomProvider.getSuperModel("4.0.0"));
+        return superPomProvider.getSuperModel("4.0.0");
     }
 
     private void importDependencyManagement(
@@ -1678,7 +1682,27 @@ public class DefaultModelBuilder implements ModelBuilder {
             }
         }
 
+        // [MNG-5600] Dependency management import should support exclusions.
+        List<Exclusion> exclusions = dependency.getDelegate().getExclusions();
+        if (importMgmt != null && !exclusions.isEmpty()) {
+            // Dependency excluded from import.
+            List<org.apache.maven.api.model.Dependency> dependencies = importMgmt.getDependencies().stream()
+                    .filter(candidate -> exclusions.stream().noneMatch(exclusion -> match(exclusion, candidate)))
+                    .map(candidate -> candidate.withExclusions(exclusions))
+                    .collect(Collectors.toList());
+            importMgmt = importMgmt.withDependencies(dependencies);
+        }
+
         return importMgmt != null ? new DependencyManagement(importMgmt) : null;
+    }
+
+    private boolean match(Exclusion exclusion, org.apache.maven.api.model.Dependency candidate) {
+        return match(exclusion.getGroupId(), candidate.getGroupId())
+                && match(exclusion.getArtifactId(), candidate.getArtifactId());
+    }
+
+    private boolean match(String match, String text) {
+        return match.equals("*") || match.equals(text);
     }
 
     @SuppressWarnings("checkstyle:parameternumber")

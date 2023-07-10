@@ -23,12 +23,12 @@ import java.io.InputStream;
 import java.io.Reader;
 
 import org.apache.maven.settings.Settings;
-import org.codehaus.plexus.util.ReaderFactory;
 import org.codehaus.plexus.util.xml.pull.EntityReplacementMap;
 import org.codehaus.plexus.util.xml.pull.MXParser;
 import org.codehaus.plexus.util.xml.pull.XmlPullParser;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
+@Deprecated
 public class SettingsXpp3Reader {
     private boolean addDefaultEntities = true;
 
@@ -52,8 +52,6 @@ public class SettingsXpp3Reader {
     } // -- boolean getAddDefaultEntities()
 
     /**
-     * @see ReaderFactory#newXmlReader
-     *
      * @param reader a reader object.
      * @param strict a strict object.
      * @throws IOException IOException if any.
@@ -69,8 +67,6 @@ public class SettingsXpp3Reader {
     } // -- Model read( Reader, boolean )
 
     /**
-     * @see ReaderFactory#newXmlReader
-     *
      * @param reader a reader object.
      * @throws IOException IOException if any.
      * @throws XmlPullParserException XmlPullParserException if
@@ -92,7 +88,10 @@ public class SettingsXpp3Reader {
      * @return Settings
      */
     public Settings read(InputStream in, boolean strict) throws IOException, XmlPullParserException {
-        return read(ReaderFactory.newXmlReader(in), strict);
+        XmlPullParser parser =
+                addDefaultEntities ? new MXParser(EntityReplacementMap.defaultEntityReplacementMap) : new MXParser();
+        parser.setInput(in, null);
+        return read(parser, strict);
     } // -- Model read( InputStream, boolean )
 
     /**
@@ -105,7 +104,7 @@ public class SettingsXpp3Reader {
      * @return Settings
      */
     public Settings read(InputStream in) throws IOException, XmlPullParserException {
-        return read(ReaderFactory.newXmlReader(in));
+        return read(in, true);
     } // -- Model read( InputStream )
 
     /**

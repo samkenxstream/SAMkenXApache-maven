@@ -42,7 +42,6 @@ import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.InvalidArtifactRTException;
 import org.apache.maven.artifact.InvalidRepositoryException;
 import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.repository.LegacyLocalRepositoryManager;
 import org.apache.maven.bridge.MavenRepositorySystem;
 import org.apache.maven.feature.Features;
 import org.apache.maven.model.Build;
@@ -69,6 +68,7 @@ import org.apache.maven.model.building.StringModelSource;
 import org.apache.maven.model.building.TransformerContext;
 import org.apache.maven.model.building.TransformerContextBuilder;
 import org.apache.maven.model.resolution.ModelResolver;
+import org.apache.maven.model.root.RootLocator;
 import org.apache.maven.repository.internal.ArtifactDescriptorUtils;
 import org.apache.maven.repository.internal.ModelCacheFactory;
 import org.codehaus.plexus.util.Os;
@@ -101,6 +101,8 @@ public class DefaultProjectBuilder implements ProjectBuilder {
     private final ProjectDependenciesResolver dependencyResolver;
     private final ModelCacheFactory modelCacheFactory;
 
+    private final RootLocator rootLocator;
+
     @SuppressWarnings("checkstyle:ParameterNumber")
     @Inject
     public DefaultProjectBuilder(
@@ -111,7 +113,8 @@ public class DefaultProjectBuilder implements ProjectBuilder {
             RepositorySystem repoSystem,
             RemoteRepositoryManager repositoryManager,
             ProjectDependenciesResolver dependencyResolver,
-            ModelCacheFactory modelCacheFactory) {
+            ModelCacheFactory modelCacheFactory,
+            RootLocator rootLocator) {
         this.modelBuilder = modelBuilder;
         this.modelProcessor = modelProcessor;
         this.projectBuildingHelper = projectBuildingHelper;
@@ -120,6 +123,7 @@ public class DefaultProjectBuilder implements ProjectBuilder {
         this.repositoryManager = repositoryManager;
         this.dependencyResolver = dependencyResolver;
         this.modelCacheFactory = modelCacheFactory;
+        this.rootLocator = rootLocator;
     }
     // ----------------------------------------------------------------------
     // MavenProjectBuilder Implementation
@@ -161,6 +165,11 @@ public class DefaultProjectBuilder implements ProjectBuilder {
                 request.setPomFile(pomFile);
                 request.setModelSource(modelSource);
                 request.setLocationTracking(true);
+
+                if (pomFile != null) {
+                    project.setRootDirectory(
+                            rootLocator.findRoot(pomFile.getParentFile().toPath()));
+                }
 
                 ModelBuildingResult result;
                 try {
@@ -445,6 +454,8 @@ public class DefaultProjectBuilder implements ProjectBuilder {
         MavenProject project = new MavenProject();
         project.setFile(pomFile);
 
+        project.setRootDirectory(rootLocator.findRoot(pomFile.getParentFile().toPath()));
+
         ModelBuildingRequest request = getModelBuildingRequest(config)
                 .setPomFile(pomFile)
                 .setTwoPhaseBuilding(true)
@@ -469,7 +480,7 @@ public class DefaultProjectBuilder implements ProjectBuilder {
             noErrors = false;
         }
 
-        Model model = result.getFileModel();
+        Model model = request.getFileModel();
 
         poolBuilder.put(model.getPomFile().toPath(), model);
 
@@ -480,7 +491,7 @@ public class DefaultProjectBuilder implements ProjectBuilder {
             File basedir = pomFile.getParentFile();
             List<File> moduleFiles = new ArrayList<>();
             for (String module : model.getModules()) {
-                if (StringUtils.isEmpty(module)) {
+                if (module == null || module.isEmpty()) {
                     continue;
                 }
 
@@ -959,8 +970,7 @@ public class DefaultProjectBuilder implements ProjectBuilder {
             this.modelPool = modelPool;
             this.transformerContextBuilder = transformerContextBuilder;
 
-            session = LegacyLocalRepositoryManager.overlay(
-                    request.getLocalRepository(), request.getRepositorySession(), repoSystem);
+            session = RepositoryUtils.overlay(request.getLocalRepository(), request.getRepositorySession(), repoSystem);
             repositories = RepositoryUtils.toRepos(request.getRemoteRepositories());
         }
     }

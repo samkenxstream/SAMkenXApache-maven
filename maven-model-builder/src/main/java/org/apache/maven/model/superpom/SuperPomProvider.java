@@ -18,7 +18,7 @@
  */
 package org.apache.maven.model.superpom;
 
-import org.apache.maven.api.model.Model;
+import org.apache.maven.model.Model;
 
 /**
  * Provides the super POM that all models implicitly inherit from.
